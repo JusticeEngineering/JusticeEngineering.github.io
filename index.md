@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-Software Engineering, Specializing in [Browsers](https://www.mozilla.org/en-US/firefox/new/) and [Decentralized](https://en.wikipedia.org/wiki/Decentralization) Systems
+Software Engineering, Specializing in [Browsers](https://www.mozilla.org/en-US/firefox/new/) and [Decentralized](https://ipfs.tech/) Systems
 
 ```
                 _________________
