@@ -1,6 +1,42 @@
 ---
 layout: default
 ---
-Software Engineering, Specializing in Browsers and Decentralized Systems
+Software Engineering, Specializing in [Browsers](https://www.mozilla.org/en-US/firefox/new/) and [Decentralized](https://en.wikipedia.org/wiki/Decentralization) Systems
 
-Contact for Work availability and pricing [meandave@protonmail.com](mailto:meandave@protonmail.com)
+```
+                _________________
+               /                /|
+              /                / |
+             /________________/ /|
+          ###|      ____      |//|
+         #   |     /   /|     |/.|
+        #  __|___ /   /.|     |  |_______________
+       #  /      /   //||     |  /              /|                  ___
+      #  /      /___// ||     | /              / |                 / \ \
+      # /______/!   || ||_____|/              /  |                /   \ \
+      #| . . .  !   || ||                    /  _________________/     \ \
+      #|  . .   !   || //      ________     /  /\________________  {   /  }
+      /|   .    !   ||//~~~~~~/   0000/    /  / / ______________  {   /  /
+     / |        !   |'/      /9  0000/    /  / / /             / {   /  /
+    / #\________!___|/      /9  0000/    /  / / /_____________/___  /  /
+   / #     /_____\/        /9  0000/    /  / / /_  /\_____________\/  /
+  / #                      ``^^^^^^    /   \ \ . ./ / ____________   /
+ +=#==================================/     \ \ ./ / /.  .  .  \ /  /
+ |#                                   |      \ \/ / /___________/  /
+ #                                    |_______\__/________________/
+ |                                    |               |  |  / /       
+ |                                    |               |  | / /       
+ |                                    |       ________|  |/ /________       
+ |                                    |      /_______/    \_________/\       
+ |                                    |     /        /  /           \ )       
+ |                                    |    /OO^^^^^^/  / /^^^^^^^^^OO\)       
+ |                                    |            /  / /        
+ |                                    |           /  / /
+ |                                    |          /___\/
+ |hectoras                            |           oo
+ |____________________________________|
+
+
+```
+
+Contact for work availability and pricing [work@justice.engineering](mailto:work@justice.engineering)
