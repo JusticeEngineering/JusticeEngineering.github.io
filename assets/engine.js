@@ -32,13 +32,13 @@
     pump:['Injection pump','Rotary distributor type, driven by the timing belt'],
     injectors:['Injectors ×6','One per cylinder, into the swirl chamber'],
     lines:['Injection lines','Six steel lines from the pump head'],
-    intake:['Intake manifold','Naturally aspirated, six runners off a plenum'],
-    exhaust:['Exhaust manifold','Six runners into one collector'],
+    intake:['Intake manifold','Naturally aspirated, opposite the exhaust (cross-flow head)'],
+    exhaust:['Exhaust manifold','Two cast pieces: front 2 ports, rear 4 ports'],
     damper:['Crank pulley','Drives the accessory belts'],
     water:['Water pump and fan clutch','Belt driven from the crank'],
     alt:['Alternator','Belt driven from the crank'],
     steer:['Power steering pump','Second belt off the crank'],
-    pan:['Oil pan','Deep sump toward the rear'],
+    pan:['Oil pan','Deep sump at the front, over the front axle'],
     filter:['Oil filter','Spin-on, mounted low on the pump side'],
     starter:['Starter motor','Bolted to the flywheel housing'],
     bell:['Flywheel housing','Mates to the transmission'],
@@ -118,47 +118,48 @@
   // water pump pulley and fan clutch
   cylX(58,-78,-62,250,0,'water');cylX(36,-62,-38,250,0,'water');cylX(70,-135,-80,250,0,'water');cylX(42,-150,-135,250,0,'water');
   // alternator
-  cylX(68,-20,140,250,178,'alt');cylX(34,-78,-62,250,178,'alt');cylX(18,-62,-20,250,178,'alt');
-  box(20,110,180,200,120,170,'alt');
+  cylX(68,-20,140,150,185,'alt');cylX(34,-78,-62,150,185,'alt');cylX(18,-62,-20,150,185,'alt');
+  box(20,110,160,180,120,170,'alt');
   // power steering pump (second belt)
-  cylX(46,-30,100,330,-178,'steer');cylX(48,-62,-50,330,-178,'steer');cylX(16,-50,-30,330,-178,'steer');
+  cylX(46,-30,100,-30,182,'steer');cylX(48,-62,-50,-30,182,'steer');cylX(16,-50,-30,-30,182,'steer');
   // belts
-  belt(-70,[[0,0,96],[0,250,58],[178,250,34]]);
-  belt(-56,[[0,0,84],[-178,330,48]]);
+  belt(-70,[[0,0,96],[0,250,58],[185,150,34]]);
+  belt(-56,[[0,0,84],[182,-30,48]]);
 
   // injection pump, low on the -z side behind the cover
   cylX(50,0,175,190,-150,'pump');cylX(38,175,232,190,-150,'pump');
   box(40,170,232,278,-186,-114,'pump');box(150,162,278,300,-160,-140,'pump');
   const outlets=[];for(let i=0;i<6;i++){const a=i/6*Math.PI*2;outlets.push([232,190+Math.sin(a)*24,-150+Math.cos(a)*24]);}
   outlets.forEach(o=>cylX(5,232,244,o[1],o[2],'pump',null,12));
-  // injectors on the -z side of the head, lines from the pump head
+  // injectors on the intake (-z) side of the head, below the manifold; lines from the pump head
   for(let i=0;i<6;i++){
     const x=XC(i);
-    cylAB(10,V(x,392,-160),V(x,374,-118),'injectors',20);
-    cylAB(13,V(x,397,-176),V(x,390,-160),'injectors',20);
+    cylAB(10,V(x,350,-152),V(x,334,-118),'injectors',20);
+    cylAB(13,V(x,355,-168),V(x,350,-152),'injectors',20);
     const o=outlets[i];
-    tube([[o[0]+12,o[1],o[2]],[o[0]+40,o[1]+10,o[2]-12],[x-20+i*4,330,-196],[x,392,-188],[x,397,-178]],3.5,'lines',48);
+    tube([[o[0]+12,o[1],o[2]],[o[0]+40,o[1]+10,o[2]-12],[x-20+i*4,300,-196],[x,348,-184],[x,355,-172]],3.5,'lines',48);
   }
 
-  // intake: plenum on the +z side with six runners and an elbow
-  cylX(42,70,620,385,205,'intake');
-  for(let i=0;i<6;i++){const x=XC(i);tube([[x,385,200],[x,384,165],[x,374,122]],20,'intake');}
-  tube([[72,385,205],[40,392,212],[10,420,218],[-8,452,218]],38,'intake');
-  cylAB(50,V(-6,450,218),V(-16,468,218),'intake',40);
-  // exhaust: runners into a collector, downpipe at the rear
-  cylX(30,84,602,285,180,'exhaust');
-  for(let i=0;i<6;i++){const x=XC(i);tube([[x,334,121],[x,320,152],[x,294,174]],18,'exhaust');}
-  tube([[598,285,180],[660,278,186],[715,200,196],[730,60,200],[732,-60,200]],32,'exhaust');
+  // intake (cross-flow head: opposite the exhaust), plenum with six runners and an elbow
+  cylX(42,70,620,398,-212,'intake');
+  for(let i=0;i<6;i++){const x=XC(i);tube([[x,398,-207],[x,397,-168],[x,388,-122]],20,'intake');}
+  tube([[72,398,-212],[40,405,-219],[10,433,-225],[-8,465,-225]],38,'intake');
+  cylAB(50,V(-6,463,-225),V(-16,481,-225),'intake',40);
+  // exhaust: two cast pieces (front 2 ports, rear 4) meeting at the outlet flange
+  cylX(28,60,220,288,180,'exhaust');cylX(28,256,630,288,180,'exhaust');
+  box(214,262,250,316,156,206,'exhaust');
+  for(let i=0;i<6;i++){const x=XC(i);tube([[x,340,121],[x,326,152],[x,298,174]],18,'exhaust');}
+  tube([[238,252,184],[240,170,200],[248,40,212],[262,-110,214]],32,'exhaust');
 
   // oil pan, flange and rear sump
   prismX([[-127,-60],[127,-60],[127,-67],[-127,-67]],0,690,'pan');
   prismX([[-120,-67],[120,-67],[112,-118],[-112,-118]],15,670,'pan');
-  prismX([[-108,-118],[108,-118],[96,-245],[-96,-245]],385,290,'pan');
-  {const g=new THREE.CylinderGeometry(14,14,12,24);g.translate(560,-251,40);add(g,'pan');}
+  prismX([[-108,-118],[108,-118],[96,-245],[-96,-245]],40,300,'pan');
+  {const g=new THREE.CylinderGeometry(14,14,12,24);g.translate(300,-251,40);add(g,'pan');}
   // oil filter, dipstick
   cylAB(34,V(330,60,-126),V(330,40,-150),'filter');cylAB(48,V(330,40,-150),V(330,-30,-240),'filter');
-  tube([[250,-40,-128],[252,120,-140],[248,300,-158],[236,430,-166]],4.5,'dipstick');
-  {const g=new THREE.TorusGeometry(13,3.5,10,28);g.rotateY(Math.PI/2);g.translate(236,446,-166);add(g,'dipstick');}
+  tube([[250,-40,-128],[252,120,-136],[248,300,-146],[240,440,-150]],4.5,'dipstick');
+  {const g=new THREE.TorusGeometry(13,3.5,10,28);g.rotateY(Math.PI/2);g.translate(240,456,-150);add(g,'dipstick');}
   // starter
   cylX(48,560,690,-25,-155,'starter');cylX(24,575,680,42,-155,'starter');
   // flywheel housing
