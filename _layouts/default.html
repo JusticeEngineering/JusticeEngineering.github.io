@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if page.title %}{% assign full_title = page.title | append: " | " | append: site.title %}{% else %}{% assign full_title = site.title %}{% endif %}
+    <title>{{ full_title }}</title>
+    <meta name="description" content="{{ page.description }}">
+    <link rel="canonical" href="{{ site.url }}{{ page.url | replace: 'index.html', '' }}">
+    <meta property="og:title" content="{{ full_title }}">
+    <meta property="og:description" content="{{ page.description }}">
+    <meta property="og:url" content="{{ site.url }}{{ page.url | replace: 'index.html', '' }}">
+    <meta property="og:site_name" content="{{ site.title }}">
+    <meta property="og:type" content="{% if page.date %}article{% else %}website{% endif %}">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,300..700&family=Geist+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="/assets/site.css">
+  </head>
+  <body>
+    {% include header.html %}
+    <main class="wrap" id="top">
+{{ content }}
+      {% include footer.html %}
+    </main>
+    <script src="/assets/nav.js"></script>
+    {% if page.drawings %}
+    <script src="/assets/three.r128.min.js"></script>
+    <script src="/assets/site.js"></script>
+    {% endif %}
+  </body>
+</html>

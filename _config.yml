@@ -1,0 +1,8 @@
+title: Justice Engineering
+url: https://justice.engineering
+email: work@justice.engineering
+# Booking link for "Schedule a meeting" on the Services page. Leave empty to fall back to email.
+booking_url: ""
+markdown: kramdown
+exclude:
+  - README.md

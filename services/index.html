@@ -1,0 +1,74 @@
+---
+layout: default
+title: Services
+description: Exposure audits for shipped apps and senior full-stack TypeScript engineering on contract, from Justice Engineering in New York.
+---
+      {% if site.booking_url != "" %}{% assign book = site.booking_url %}{% else %}{% assign book = "mailto:" | append: site.email | append: "?subject=Meeting%20request" %}{% endif %}
+      <div class="page-head grid">
+        <div class="eyebrow mono">Software · Services</div>
+        <div>
+          <h1>Services</h1>
+          <p>Senior engineering for teams that need hard problems done carefully, and an audit of what your shipped apps give away.</p>
+          <div class="ctas">
+            <a class="btn primary" href="mailto:{{ site.email }}?subject=Exposure%20audit">Email about an audit</a>
+            <a class="btn" href="{{ book }}">Schedule a meeting</a>
+          </div>
+        </div>
+      </div>
+
+      <section class="s" id="exposure-audit">
+        <div class="grid">
+          <div class="label mono">Exposure audit</div>
+          <div class="body">
+            <p class="statement">AI agents can now read a shipped app the way an experienced reverse engineer would.</p>
+            <div class="offer">
+              <div>
+                <span class="mono tagline">Why now</span>
+                <p>Open-source reverse-engineering agents drive tools like Ghidra, IDA and Hopper on their own. Anything your client code holds, such as keys, license checks, pricing rules or trusted API calls, should be treated as public. This audit runs that same analysis against your own apps, with your authorization, and shows what an outsider can extract and how to close it.</p>
+              </div>
+              <dl class="spec mono">
+                <div><dt>Scope</dt><dd>Web, Electron, mobile and desktop apps you ship</dd></div>
+                <div><dt>Looks for</dt><dd>Embedded secrets, client-side license and payment checks, exposed business logic, unverified API trust</dd></div>
+                <div><dt>Method</dt><dd>Agent-assisted static analysis of bundles and binaries, verified by hand</dd></div>
+                <div><dt>Delivered</dt><dd>Findings with evidence and severity, plus fixes: server-side trust, key rotation, signed requests</dd></div>
+                <div><dt>Authorization</dt><dd>Your own apps only, under a written scope</dd></div>
+              </dl>
+            </div>
+            <div class="ctas">
+              <a class="btn primary" href="mailto:{{ site.email }}?subject=Exposure%20audit">Email about an audit</a>
+              <a class="btn" href="{{ book }}">Schedule a meeting</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="s" id="engineering">
+        <div class="grid">
+          <div class="label mono">Contract engineering</div>
+          <div class="body">
+            <p class="statement">Fifteen years of TypeScript, from identity and encryption to payments.</p>
+            <div class="cols">
+              <div>
+                <h4>Experience</h4>
+                <ul class="list">
+                  <li>Mozilla<span>Firefox Accounts: OAuth, end-to-end encryption, payment infrastructure</span></li>
+                  <li>Protocol Labs · Filecoin Foundation<span>Engineering</span></li>
+                  <li>Independent consulting<span>TypeScript across the stack</span></li>
+                </ul>
+              </div>
+              <div>
+                <h4>Capabilities</h4>
+                <ul class="list">
+                  <li>Product engineering<span>TypeScript, full stack, from first commit to production</span></li>
+                  <li>Identity, security and payments<span>OAuth, end-to-end encryption, billing systems</span></li>
+                  <li>Hardware interfaces<span>OBD2, CAN and Bluetooth LE</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="contact">
+              <span>Contracts and availability:</span>
+              <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+            </div>
+          </div>
+        </div>
+      </section>

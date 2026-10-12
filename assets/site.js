@@ -1,6 +1,7 @@
-// Line drawings for the home page: hero crankshaft, Crew Chief J1962 connector,
+// Line drawings for the product pages: Crew Chief J1962 connector and
 // Drafting Table bracket. Needs three.js r128 loaded first.
 (function(){
+  if(!document.querySelector('.pfig'))return;
   if(!window.THREE){document.querySelectorAll('canvas').forEach(c=>c.hidden=true);document.querySelectorAll('.nogl').forEach(n=>n.hidden=false);return;}
   const V=(x,y,z)=>new THREE.Vector3(x,y,z);
   const Y=V(0,1,0);
@@ -37,54 +38,6 @@
     try{const r=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});r.setPixelRatio(Math.min(window.devicePixelRatio||1,2));r.setClearColor(0x000000,0);return r;}
     catch(e){return null;}
   }
-
-  // =====================================================================
-  // Hero: inline-four crankshaft
-  // =====================================================================
-  (function(){
-    const canvas=document.getElementById('crank'),thetaOut=document.getElementById('theta');
-    const renderer=makeRenderer(canvas);if(!renderer){canvas.hidden=true;return;}
-    let needs=true;redraw.push(()=>{needs=true;});
-    const scene=new THREE.Scene(),spin=new THREE.Group(),body=new THREE.Group();scene.add(spin);spin.add(body);
-    const THROW=45,cyls=[];
-    function cyl(x0,len,r,oy,oz){
-      const g=new THREE.CylinderGeometry(r,r,len,72,1,false);g.rotateZ(Math.PI/2);
-      const m=new THREE.Mesh(g,M.fill);m.position.set(x0+len/2,oy,oz);
-      const e=new THREE.LineSegments(new THREE.EdgesGeometry(g,30),M.line);e.position.copy(m.position);
-      body.add(m,e);cyls.push({x0,x1:x0+len,r,p:V(0,oy,oz)});
-    }
-    const sh=new THREE.Shape(),a0=200*Math.PI/180,a1=340*Math.PI/180;
-    sh.moveTo(27,THROW);sh.absarc(0,THROW,27,0,Math.PI,false);sh.lineTo(58*Math.cos(a0),58*Math.sin(a0));sh.absarc(0,0,58,a0,a1,false);sh.lineTo(27,THROW);
-    function web(x0,ang){
-      const g=new THREE.ExtrudeGeometry(sh,{depth:14,bevelEnabled:false,curveSegments:36});g.rotateY(Math.PI/2);g.rotateX(ang);
-      const m=new THREE.Mesh(g,M.fill);m.position.x=x0;
-      const e=new THREE.LineSegments(new THREE.EdgesGeometry(g,30),M.line);e.position.x=x0;body.add(m,e);
-    }
-    let x=0;cyl(x,40,16,0,0);x+=40;
-    [0,Math.PI,Math.PI,0].forEach(a=>{cyl(x,22,25,0,0);x+=22;web(x,a);x+=14;cyl(x,20,22,THROW*Math.cos(a),THROW*Math.sin(a));x+=20;web(x,a);x+=14;});
-    cyl(x,22,25,0,0);x+=22;cyl(x,12,48,0,0);x+=12;
-    const LEN=x;body.position.x=-LEN/2;
-    const silPos=new Float32Array(cyls.length*12),silGeo=new THREE.BufferGeometry();
-    silGeo.setAttribute('position',new THREE.BufferAttribute(silPos,3));
-    const sil=new THREE.LineSegments(silGeo,M.line);sil.frustumCulled=false;scene.add(sil);
-    const cam=new THREE.OrthographicCamera(-1,1,1,-1,1,4000),vd=V(.3,.34,1).normalize();
-    cam.position.copy(vd).multiplyScalar(1200);cam.lookAt(0,0,0);
-    const nrm=V(1,0,0).cross(vd).normalize();
-    function updateSil(a){const c=Math.cos(a),s=Math.sin(a);let i=0;cyls.forEach(k=>{const py=k.p.y*c-k.p.z*s,pz=k.p.y*s+k.p.z*c;for(const g of [1,-1]){const oy=py+nrm.y*k.r*g,oz=pz+nrm.z*k.r*g;silPos[i++]=k.x0-LEN/2;silPos[i++]=oy;silPos[i++]=oz;silPos[i++]=k.x1-LEN/2;silPos[i++]=oy;silPos[i++]=oz;}});silGeo.attributes.position.needsUpdate=true;}
-    function size(){const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);const asp=w/h,hh=Math.max(118,LEN*.56/asp),hw=hh*asp;cam.left=-hw;cam.right=hw;cam.top=hh;cam.bottom=-hh;cam.updateProjectionMatrix();needs=true;}
-    new ResizeObserver(size).observe(canvas);size();
-    let ang=reduce?.62:0,drag=null,vis=true,last=performance.now();const SPEED=2*Math.PI/48;
-    canvas.addEventListener('pointerdown',e=>{drag={x:e.clientX,a:ang};try{canvas.setPointerCapture(e.pointerId);}catch(_){}});
-    canvas.addEventListener('pointermove',e=>{if(!drag)return;ang=drag.a+(e.clientX-drag.x)*.008;needs=true;});
-    canvas.addEventListener('pointerup',()=>drag=null);canvas.addEventListener('pointercancel',()=>drag=null);
-    canvas.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){ang+=(e.key==='ArrowRight'?1:-1)*Math.PI/36;needs=true;e.preventDefault();}});
-    new IntersectionObserver(es=>{vis=es[0].isIntersecting;needs=true;}).observe(canvas);
-    function frame(now){requestAnimationFrame(frame);const dt=Math.min(.1,(now-last)/1000);last=now;if(!vis)return;
-      if(!reduce&&!drag){ang+=SPEED*dt;needs=true;}if(!needs)return;needs=false;
-      spin.rotation.x=ang;updateSil(ang);renderer.render(scene,cam);
-      thetaOut.textContent=(((ang*180/Math.PI)%360+360)%360).toFixed(1).padStart(5,'0')+'°';}
-    requestAnimationFrame(frame);
-  })();
 
   // =====================================================================
   // Drawing engine: ortho camera with view tweens, orbit, drafted annotations
@@ -220,6 +173,8 @@
   // =====================================================================
   // Crew Chief: J1962 data link connector (mm)
   // =====================================================================
+  let cc=null;
+  if(document.getElementById('cc-fig')){
   const PINFN={1:'Manufacturer discretionary',2:'SAE J1850 bus +',3:'Manufacturer discretionary',4:'Chassis ground',5:'Signal ground',
     6:'CAN high · ISO 15765-4',7:'K-line · ISO 9141-2 / 14230-4',8:'Manufacturer discretionary',9:'Manufacturer discretionary',10:'SAE J1850 bus −',
     11:'Manufacturer discretionary',12:'Manufacturer discretionary',13:'Manufacturer discretionary',14:'CAN low · ISO 15765-4',15:'L-line · ISO 9141-2 / 14230-4',16:'Battery +12 V'};
@@ -257,7 +212,6 @@
     logLine('rx','7E8',[hex(2+d.length),'41',hex(p.pid)].concat(d.map(hex)).join(' '),p.dec(d),fresh);}
   exchange(false);exchange(false);exchange(false);
 
-  let cc=null;
   cc=new Drawing(document.getElementById('cc-fig'),{
     k:.5,dist:400,initial:'iso',
     views:{
@@ -296,14 +250,17 @@
       return p||changed;
     }
   });
+  }
 
   // =====================================================================
   // Drafting Table: gusseted angle bracket (inches)
   // =====================================================================
+  let dt=null;
+  if(document.getElementById('dt-fig')){
   const dtView=document.getElementById('dt-view'),dtHid=document.getElementById('dt-hid'),dtSel=document.getElementById('dt-sel'),dtBtn=document.getElementById('dt-hidden');
   const VIEWNAME={front:'Front',top:'Top',right:'Right side',iso:'Isometric'};
   const R=.203; // Ø.406 thru, for 3/8 bolts
-  const dt=new Drawing(document.getElementById('dt-fig'),{
+  dt=new Drawing(document.getElementById('dt-fig'),{
     k:.04,dist:40,initial:'iso',
     views:{
       front:{dir:V(0,0,1),up:V(0,1,0),c:V(2.25,1.75,1.5),size:[6.8,5.6]},
@@ -359,6 +316,7 @@
     }
   });
   dtBtn.addEventListener('click',()=>{if(dt.dead)return;dt.hiddenOn=!dt.hiddenOn;dtBtn.setAttribute('aria-pressed',String(dt.hiddenOn));dtHid.textContent=dt.hiddenOn?'Shown, dashed':'Removed';dt.needs=true;});
+  }
 
   theme();
   const drawings=[cc,dt];

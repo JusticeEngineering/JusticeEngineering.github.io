@@ -1,41 +1,9 @@
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Justice Engineering</title>
-    <meta name="description" content="An independent engineering practice in New York building software, tools and machines. Makers of Crew Chief and Drafting Table; senior software engineering on contract.">
-    <link rel="canonical" href="https://justice.engineering/">
-    <meta property="og:title" content="Justice Engineering">
-    <meta property="og:description" content="An independent engineering practice in New York building software, tools and machines.">
-    <meta property="og:url" content="https://justice.engineering/">
-    <meta property="og:site_name" content="Justice Engineering">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_US">
-    <meta name="twitter:card" content="summary">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,300..700&family=Geist+Mono:wght@400;500&display=swap">
-    <link rel="stylesheet" href="/assets/site.css">
-  </head>
-  <body>
-    <header class="top">
-      <div class="wrap grid">
-        <a class="mark" href="#top">Justice Engineering</a>
-        <nav aria-label="Sections">
-          <a href="#crew-chief">Crew Chief</a>
-          <a href="#drafting-table">Drafting Table</a>
-          <a href="#software">Software</a>
-          <a href="/blog/">Blog</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </div>
-    </header>
-
-    <main class="wrap" id="top">
+---
+layout: default
+description: An independent engineering practice in New York building software, tools and machines. Makers of Crew Chief and Drafting Table; senior software engineering on contract.
+---
       <div class="hero grid">
         <h1>An independent engineering practice building software, tools and machines.</h1>
-        <p class="lead">Justice Engineering is led by David Justice in New York. It builds its own products for people who work on vehicles and in the shop, and takes on senior software engineering for teams.</p>
         <dl class="meta mono">
           <div><dt>Based</dt><dd>New York</dd></div>
           <div><dt>Practice</dt><dd>Products · Software</dd></div>
@@ -44,135 +12,32 @@
         </dl>
       </div>
 
-      <figure class="figure">
-        <canvas id="crank" tabindex="0" aria-label="Line drawing of an inline-four crankshaft turning slowly. Drag or use the arrow keys to turn it."></canvas>
-        <figcaption class="figcap mono">
-          <span>Inline-four crankshaft · 4 throws at 180° · stroke 90 mm · firing order 1–3–4–2</span>
-          <span>θ <b id="theta">000.0°</b></span>
-        </figcaption>
-      </figure>
-
-      <!-- ===== Crew Chief ===== -->
-      <section class="s" id="crew-chief">
+      <section class="s" id="products">
         <div class="grid">
-          <div class="label mono">Product</div>
+          <div class="label mono">Products</div>
           <div class="body">
-            <div class="phero">
-              <div>
-                <h2>Crew Chief</h2>
-                <p>Diagnostics and maintenance for the vehicles you own. Crew Chief reads fault codes and live data from the OBD2 port over Bluetooth LE and keeps a record of the work.</p>
-                <p class="links mono"><a href="https://apps.apple.com/us/app/crewchief-auto/id6760673109">App Store ↗</a> <a href="https://crewchief.cc">crewchief.cc ↗</a></p>
-              </div>
-              <dl class="spec mono">
-                <div><dt>Status</dt><dd>On the App Store</dd></div>
-                <div><dt>Platform</dt><dd>iPhone</dd></div>
-                <div><dt>Interface</dt><dd>OBD2 · CAN · Bluetooth LE</dd></div>
-                <div><dt>Web</dt><dd><a href="https://crewchief.cc">crewchief.cc</a></dd></div>
-              </dl>
-            </div>
-          </div>
-          <div class="pfig" id="cc-fig">
-            <div class="stage">
-              <div class="bar mono">
-                <div class="seg" role="group" aria-label="View">
-                  <button type="button" data-view="face" aria-pressed="false">Pin face</button>
-                  <button type="button" data-view="iso" aria-pressed="true">Isometric</button>
-                </div>
-                <span>Drag to orbit · hover a pin</span>
-              </div>
-              <div class="cv">
-                <canvas aria-label="Line drawing of the J1962 OBD2 connector with its 16 pins"></canvas>
-                <div class="ov"></div>
-                <p class="nogl mono" hidden>This drawing needs WebGL.</p>
-              </div>
-            </div>
-            <div class="panel mono">
-              <div class="phead"><span>J1962 connector</span><span>Vehicle side</span></div>
-              <p class="pstatus" id="cc-status">Select a pin to see its function.</p>
-              <ul class="pins" id="cc-pins"></ul>
-              <div class="phead"><span>Bus traffic</span><span>Sample · CAN 500 kbit/s</span></div>
-              <ol class="log" id="cc-log" aria-live="off"></ol>
-            </div>
+            <ul class="products">
+              <li><a href="/crew-chief/">
+                <h3>Crew Chief</h3>
+                <p>Diagnostics and maintenance for the vehicles you own, read from the OBD2 port over Bluetooth LE.</p>
+                <span class="go mono">iPhone →</span>
+              </a></li>
+              <li><a href="/drafting-table/">
+                <h3>Drafting Table</h3>
+                <p>Scale-accurate 2D plan sheets. Import a model, PDF or image, then draw, dimension and print at exact scale.</p>
+                <span class="go mono">Mac →</span>
+              </a></li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <!-- ===== Drafting Table ===== -->
-      <section class="s" id="drafting-table">
-        <div class="grid">
-          <div class="label mono">Product</div>
-          <div class="body">
-            <div class="phero">
-              <div>
-                <h2>Drafting Table</h2>
-                <p>Scale-accurate 2D plan sheets for the Mac. Import a 3D model, PDF or image, then draw, dimension and print at exact scale. One purchase, no subscription.</p>
-                <p class="links mono"><a href="https://apps.apple.com/app/id6794517358">Mac App Store ↗</a> <a href="/drafting-table/">More about Drafting Table</a></p>
-              </div>
-              <dl class="spec mono">
-                <div><dt>Status</dt><dd>On the Mac App Store</dd></div>
-                <div><dt>Platform</dt><dd>macOS 14 or later</dd></div>
-                <div><dt>Imports</dt><dd>STL, OBJ, USDZ, PDF, images</dd></div>
-                <div><dt>Output</dt><dd>Vector PDF and PNG, printed at exact scale</dd></div>
-                <div><dt>Pricing</dt><dd>One-time purchase</dd></div>
-              </dl>
-            </div>
-          </div>
-          <div class="pfig" id="dt-fig">
-            <div class="stage">
-              <div class="bar mono">
-                <div class="tools">
-                  <div class="seg" role="group" aria-label="View">
-                    <button type="button" data-view="front" aria-pressed="false">Front</button>
-                    <button type="button" data-view="top" aria-pressed="false">Top</button>
-                    <button type="button" data-view="right" aria-pressed="false">Right</button>
-                    <button type="button" data-view="iso" aria-pressed="true">Iso</button>
-                  </div>
-                  <div class="seg"><button type="button" id="dt-hidden" aria-pressed="true">Hidden lines</button></div>
-                </div>
-                <span>Drag to orbit · hover a part</span>
-              </div>
-              <div class="cv">
-                <canvas aria-label="Line drawing of a gusseted steel angle bracket with hidden lines and dimensions"></canvas>
-                <div class="ov"></div>
-                <p class="nogl mono" hidden>This drawing needs WebGL.</p>
-              </div>
-            </div>
-            <div class="panel mono">
-              <div class="phead"><span>Inspector</span><span>Sample part</span></div>
-              <dl class="insp">
-                <div><dt>Part</dt><dd>Gusseted angle bracket</dd></div>
-                <div><dt>Material</dt><dd>A36 steel</dd></div>
-                <div><dt>View</dt><dd id="dt-view">Isometric</dd></div>
-                <div><dt>Projection</dt><dd>Orthographic, third angle</dd></div>
-                <div><dt>Hidden lines</dt><dd id="dt-hid">Shown, dashed</dd></div>
-                <div><dt>Units</dt><dd>Inches</dd></div>
-              </dl>
-              <div class="phead"><span>Selection</span></div>
-              <p class="sel" id="dt-sel">Hover a part to inspect it.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== Software ===== -->
       <section class="s" id="software">
         <div class="grid">
           <div class="label mono">Software</div>
           <div class="body">
             <p class="statement">Senior full-stack engineering for teams that need hard problems done carefully. Fifteen years of TypeScript, from identity and encryption to payments.</p>
-            <div class="offer">
-              <div>
-                <span class="mono tagline">Service</span>
-                <h3>Exposure audit</h3>
-                <p>AI agents can now read a shipped app the way an experienced reverse engineer would. Anything your client code holds, such as keys, license checks, pricing rules or trusted API calls, should be treated as public. This audit runs that same analysis against your own apps, with your authorization, and shows what an outsider can extract and how to close it.</p>
-              </div>
-              <dl class="spec mono">
-                <div><dt>Scope</dt><dd>Web, Electron, mobile and desktop apps you ship</dd></div>
-                <div><dt>Looks for</dt><dd>Embedded secrets, client-side license and payment checks, exposed business logic, unverified API trust</dd></div>
-                <div><dt>Method</dt><dd>Agent-assisted static analysis of bundles and binaries, verified by hand</dd></div>
-                <div><dt>Delivered</dt><dd>Findings with evidence and severity, plus fixes: server-side trust, key rotation, signed requests</dd></div>
-              </dl>
-            </div>
+            <div class="ctas"><a class="btn" href="/services/">Services, including the Exposure audit →</a></div>
             <div class="cols">
               <div>
                 <h4>Experience</h4>
@@ -202,23 +67,8 @@
           <div class="body">
             <div class="contact">
               <span>For software contracts and product inquiries:</span>
-              <a href="mailto:work@justice.engineering">work@justice.engineering</a>
+              <a href="mailto:{{ site.email }}">{{ site.email }}</a>
             </div>
           </div>
         </div>
       </section>
-
-      <footer class="mono">
-        <span>© 2026 Justice Engineering · New York</span>
-        <span class="fl">
-          <a href="https://github.com/meandavejustice/resume/blob/master/DavidJusticeResume.pdf">Resume</a>
-          <a href="/blog/">Blog</a>
-          <span>No analytics. No cookies.</span>
-        </span>
-      </footer>
-    </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="/assets/site.js"></script>
-  </body>
-</html>

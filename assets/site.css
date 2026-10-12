@@ -1,4 +1,4 @@
-/* Layout: 12-column Swiss grid. Label column (3) + content column (9) per section; each product gets a full-width figure: drawing stage (8) + mono inspector panel (4). */
+/* Layout: 12-column Swiss grid. Label column (3) + content column (9) per section; product pages get a full-width figure: drawing stage (8) + mono inspector panel (4). */
 :root{
   --bg:#ffffff; --ink:#111312; --ink-2:#5e6460; --rule:#dfe2df; --line:#1a1d1b; --accent:#a83d26;
   --f-sans:'Archivo','Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -16,26 +16,35 @@ a:focus-visible,canvas:focus-visible,button:focus-visible{outline:2px solid var(
 .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.02em}
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
 
-header.top{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--rule)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--rule)}
 header.top .grid{align-items:center;min-height:56px}
 .mark{grid-column:1 / span 5;font-weight:600;font-size:15px;letter-spacing:.01em;border:0}
 nav{grid-column:6 / span 7;display:flex;justify-content:flex-end;gap:28px;flex-wrap:wrap}
-nav a{font-family:var(--f-mono);font-size:12px;color:var(--ink-2);border:0}
-nav a:hover{color:var(--ink)}
+nav{align-items:center}
+nav > a,.dd-btn{font-family:var(--f-mono);font-size:12px;color:var(--ink-2);border:0}
+nav > a:hover,.dd-btn:hover,.dd.open .dd-btn{color:var(--ink)}
+nav > a[aria-current="page"]{color:var(--ink)}
 
-.hero{padding-block:clamp(56px,9vw,120px) 40px;row-gap:32px}
+/* Software dropdown: hover or focus on desktop, tap via nav.js */
+.dd{position:relative}
+.dd-btn{background:none;padding:18px 0;cursor:pointer;letter-spacing:.02em}
+.dd-btn span{font-size:9px;margin-left:2px}
+.dd-menu{position:absolute;top:100%;right:-16px;z-index:6;min-width:290px;margin:0;padding:6px 16px;list-style:none;background:var(--bg);border:1px solid var(--ink);display:none}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu,.dd.open .dd-menu{display:block}
+.dd-menu li+li{border-top:1px solid var(--rule)}
+.dd-menu a{display:grid;gap:2px;padding-block:10px;border:0}
+.dd-menu b{font-weight:500;font-size:15px}
+.dd-menu span{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-2)}
+.dd-menu a:hover b{color:var(--accent)}
+
+.hero{padding-block:clamp(56px,9vw,120px) 0;row-gap:32px}
 .hero h1{grid-column:1 / span 9;margin:0;font-weight:420;font-stretch:96%;font-size:clamp(34px,5.2vw,70px);line-height:1.03;letter-spacing:-.025em;text-wrap:balance}
-.hero .lead{grid-column:1 / span 6;margin:0;font-size:18px;line-height:1.55;color:var(--ink-2);max-width:56ch}
-.meta{grid-column:10 / span 3;grid-row:1 / span 2;align-self:end;display:grid;border-top:1px solid var(--ink);margin:0}
+.meta{grid-column:10 / span 3;align-self:end;display:grid;border-top:1px solid var(--ink);margin:0}
 .meta div{display:flex;justify-content:space-between;gap:12px;padding-block:9px;border-bottom:1px solid var(--rule)}
 .meta dt{color:var(--ink-2)}
 .meta dd{margin:0;text-align:right}
 .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--accent);margin-right:7px;vertical-align:1px}
 
-.figure{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin:0}
-.figure canvas{display:block;width:100%;height:clamp(200px,30vw,400px);cursor:ew-resize;touch-action:pan-y}
-.figcap{display:flex;justify-content:space-between;gap:8px 24px;flex-wrap:wrap;padding-block:12px;color:var(--ink-2)}
-.figcap b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}
 
 section.s{padding-block:clamp(64px,8vw,112px) 0}
 section.s > .grid{border-top:1px solid var(--ink);padding-top:20px;row-gap:32px}
@@ -111,7 +120,7 @@ footer{margin-top:clamp(72px,9vw,120px);border-top:1px solid var(--rule);padding
 footer .fl{display:flex;gap:20px;flex-wrap:wrap}
 
 @media (max-width:900px){
-  .hero h1,.hero .lead{grid-column:1 / -1}
+  .hero h1{grid-column:1 / -1}
   .meta{grid-column:1 / span 12;grid-row:auto}
   .label,.body{grid-column:1 / -1}
   .cols,.phero,.pfig,.offer{grid-template-columns:minmax(0,1fr)}
@@ -122,4 +131,71 @@ footer .fl{display:flex;gap:20px;flex-wrap:wrap}
   header.top{position:static}
   .mark{grid-column:1 / -1;padding-top:12px}
   nav{grid-column:1 / -1;justify-content:flex-start;gap:18px;padding-bottom:12px}
+}
+
+/* Product index on the home page */
+ul.products{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+ul.products a{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,5fr) 4.5em;gap:8px 24px;align-items:baseline;padding-block:20px;border-bottom:1px solid var(--rule)}
+ul.products h3{margin:0;font-size:clamp(24px,2.6vw,32px);font-weight:450;letter-spacing:-.015em;line-height:1.1}
+ul.products p{margin:0;color:var(--ink-2)}
+ul.products .go{color:var(--ink-2);text-align:right}
+ul.products a:hover h3,ul.products a:hover .go{color:var(--accent)}
+
+/* Calls to action */
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;font:400 12px var(--f-mono);letter-spacing:.02em;padding:10px 14px;border:1px solid var(--ink);color:var(--ink)}
+.btn:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn.primary:hover{background:var(--accent);border-color:var(--accent)}
+
+/* Inner pages */
+.page-head{padding-block:clamp(48px,7vw,96px) 0;row-gap:24px}
+.page-head .eyebrow{grid-column:1 / span 3;color:var(--ink-2);padding-top:.6em}
+.page-head > div{grid-column:4 / span 9;display:grid;gap:20px;min-width:0}
+.page-head h1,.ptitle{margin:0;font-weight:420;font-stretch:96%;font-size:clamp(36px,5vw,64px);line-height:1.04;letter-spacing:-.025em;text-wrap:balance}
+.page-head p{margin:0;font-size:19px;color:var(--ink-2);max-width:52ch}
+.page-head p.mono{font-size:12px}
+.page-head .crumb{color:var(--ink-2)}
+.page-head .crumb a{border:0}
+.page-head .crumb a:hover{color:var(--ink)}
+article.page,section.page{padding-block:clamp(48px,7vw,96px) 0}
+article.page > .grid,section.page > .grid{border-top:1px solid var(--ink);padding-top:20px;row-gap:24px}
+.label a{border:0}
+
+/* Feature list on product pages */
+.features{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;border-top:1px solid var(--rule)}
+.features div{padding-block:16px;border-bottom:1px solid var(--rule);display:grid;gap:6px;align-content:start}
+.features h3{margin:0;font-size:17px;font-weight:500}
+.features p{margin:0;color:var(--ink-2);font-size:15px}
+
+/* Running text: blog posts, support, privacy */
+.prose{max-width:66ch;font-size:17px;line-height:1.65}
+.prose > *{margin:0 0 1em}
+.prose > :first-child{margin-top:0}
+.prose h2{font-size:24px;font-weight:500;letter-spacing:-.01em;margin:1.6em 0 .5em}
+.prose h3{font-size:19px;font-weight:500;margin:1.4em 0 .4em}
+.prose h4{font-family:var(--f-mono);font-size:13px;font-weight:500;margin:1.2em 0 .3em}
+.prose a{border-color:var(--ink-2)}
+.prose code{font-family:var(--f-mono);font-size:.85em;background:#f3f4f3;padding:1px 4px}
+.prose ul,.prose ol{padding-left:1.2em}
+.prose li+li{margin-top:.3em}
+
+/* Blog index */
+ol.posts{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.posts a{display:grid;grid-template-columns:9em minmax(0,1fr);gap:4px 24px;padding-block:16px;border-bottom:1px solid var(--rule)}
+ol.posts time{color:var(--ink-2)}
+ol.posts b{font-weight:450;font-size:22px;letter-spacing:-.01em;line-height:1.2}
+ol.posts span{grid-column:2;color:var(--ink-2)}
+ol.posts a:hover b{color:var(--accent)}
+
+@media (max-width:900px){
+  .page-head .eyebrow,.page-head > div{grid-column:1 / -1}
+  ul.products a{grid-template-columns:minmax(0,1fr)}
+  .features{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .dd-btn{padding:0}
+  .dd-menu{left:-1px;right:auto;min-width:min(290px,calc(100vw - 32px))}
+  ol.posts a{grid-template-columns:minmax(0,1fr)}
+  ol.posts span{grid-column:1}
 }

@@ -1,220 +1,90 @@
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta charset='utf-8'>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Drafting Table | Justice Engineering</title>
-    <meta property="og:title" content="Drafting Table | Justice Engineering" />
-    <meta property="og:locale" content="en_US" />
-    <meta name="description" content="Drafting Table — scale-accurate 2D plan sheets for Mac. Import a PDF, image, or 3D model, calibrate, draw, dimension, and print at exact scale." />
-    <meta property="og:description" content="Drafting Table — scale-accurate 2D plan sheets for Mac. Import a PDF, image, or 3D model, calibrate, draw, dimension, and print at exact scale." />
-    <link rel="canonical" href="https://justice.engineering/drafting-table/" />
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;800&display=swap');
-      body {
-        font-family: arial, sans-serif;
-        color: #333;
-        background-color: white;
-        font-size: 1em;
-        line-height: 1.5;
-        margin: 0;
-        padding: 0;
-      }
-      .inner {
-        width: 620px;
-        margin: 0 auto;
-      }
-      header {
-        padding-top: 35px;
-        padding-bottom: 0;
-      }
-      header h1 {
-        font-family: 'Raleway', sans-serif;
-        font-size: 36px;
-        font-weight: 800;
-        letter-spacing: -1.5px;
-        color: #363;
-      }
-      header h1 a {
-        text-decoration: none;
-        color: #363;
-      }
-      header h1 a:hover {
-        background-color: #ffffb5;
-      }
-      a {
-        text-decoration: underline;
-        color: #333;
-      }
-      a:hover {
-        color: #333;
-        background-color: #ffffb5;
-      }
-      hr {
-        border: none;
-        border-bottom: 2px solid #fed700;
-        padding: 0;
-        margin: 1em 0;
-      }
-      h2 {
-        font-family: 'Raleway', sans-serif;
-        font-size: 28px;
-        font-weight: 800;
-        color: #303030;
-        margin-bottom: 4px;
-        letter-spacing: -0.5px;
-      }
-      h3 {
-        font-size: 18px;
-        font-weight: bold;
-        color: #303030;
-        margin-top: 1.5em;
-        margin-bottom: 8px;
-      }
-      p {
-        margin-bottom: 20px;
-        font-weight: 300;
-      }
-      ul {
-        margin-bottom: 20px;
-        padding-left: 20px;
-      }
-      ul li {
-        font-weight: 300;
-        margin-bottom: 6px;
-      }
-      nav {
-        font-size: 14px;
-        margin-bottom: 0;
-      }
-      nav a + a::before {
-        content: " / ";
-        color: #999;
-        text-decoration: none;
-      }
-      .pitch {
-        font-size: 20px;
-        font-weight: 300;
-        color: #6d6d6d;
-        margin-top: 4px;
-      }
-      .badge {
-        margin: 1.5em 0;
-      }
-      .badge a {
-        display: inline-block;
-        text-decoration: none;
-      }
-      .badge a:hover {
-        background: none;
-      }
-      .badge img {
-        height: 54px;
-      }
-      .requirements {
-        font-size: 14px;
-        color: #999;
-      }
-      .screenshot-slot {
-        border: 2px dashed #ccc;
-        border-radius: 4px;
-        background: #fafafa;
-        color: #999;
-        font-size: 14px;
-        text-align: center;
-        padding: 70px 20px;
-        margin-bottom: 1em;
-      }
-      .screenshots img {
-        max-width: 100%;
-        margin-bottom: 1em;
-      }
-      footer {
-        margin-top: 40px;
-        padding-top: 20px;
-        padding-bottom: 30px;
-        font-size: 13px;
-        color: #aaa;
-      }
-      footer a {
-        color: #666;
-      }
-      @media only screen and (max-width: 767px) {
-        .inner {
-          width: 94%;
-          margin: 0 auto;
-        }
-        header {
-          padding-top: 10px;
-          padding-bottom: 10px;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="inner">
-      <header>
-        <h1><a href="/">Justice Engineering</a></h1>
-        <nav><a href="/">Home</a> <a href="/drafting-table/">Drafting Table</a> <a href="/drafting-table/support/">Support</a> <a href="/drafting-table/privacy/">Privacy</a></nav>
-      </header>
-      <hr>
-      <section>
-        <!-- TODO: app icon — drop a rendered icon (itself a Drafting Table drawing of a drafting table) here, e.g.
-             <img src="/images/drafting-table-icon.png" alt="Drafting Table app icon" width="128" height="128"> -->
-        <h2>Drafting Table</h2>
-        <p class="pitch">Scale-accurate 2D plan sheets on your Mac. Draw it, dimension it, print it at exact scale.</p>
-
-        <div class="badge">
-          <a href="https://apps.apple.com/app/id6794517358"><img src="/images/download-on-the-mac-app-store.svg" alt="Download on the Mac App Store"></a>
+---
+layout: default
+title: Drafting Table
+description: Drafting Table — scale-accurate 2D plan sheets for Mac. Import a PDF, image, or 3D model, calibrate, draw, dimension, and print at exact scale.
+drawings: true
+---
+      <div class="page-head grid">
+        <div class="eyebrow mono">Product · Mac</div>
+        <div>
+          <h1>Drafting Table</h1>
+          <p>Scale-accurate 2D plan sheets on your Mac. Draw it, dimension it, print it at exact scale.</p>
+          <div class="ctas">
+            <a class="btn primary" href="https://apps.apple.com/app/id6794517358">Download on the Mac App Store ↗</a>
+            <a class="btn" href="/drafting-table/support/">Support</a>
+          </div>
+          <p class="mono">Requires macOS 14.0 or later. One-time purchase, no subscription.</p>
         </div>
-        <p class="requirements">Requires macOS 14.0 or later. One-time purchase — no subscription.</p>
+      </div>
 
-        <h3>From 3D model to measured drawing</h3>
-        <p>Import an STL, OBJ, or USDZ file and Drafting Table projects it into a
-        measured 2D line drawing — real dimensions, straight from the model
-        geometry. It's how the app's own icon was made: a drawing, by the app,
-        of a drafting table.</p>
-
-        <h3>Trace over anything</h3>
-        <p>Bring in a PDF or image as an underlay, then calibrate it with two
-        clicks and one real-world distance. From that point on, everything you
-        draw and measure on top of it is true to scale.</p>
-
-        <h3>Draw, dimension, annotate</h3>
-        <p>Lines, dimensions, annotations, tables, and scale bars, with snapping
-        to keep it all tidy. Dimensions read true to the model — what the sheet
-        says is what the thing measures.</p>
-
-        <h3>Print at exact scale</h3>
-        <p>Sheets export as true-vector PDF or PNG and print at exact scale, so
-        a drawing marked 1:10 comes off the printer at 1:10. Take it to the
-        shop and put a ruler on it.</p>
-
-        <h3>Nine starter templates</h3>
-        <p>Title blocks, site plan, shop drawing, cut list, assembly and parts
-        list, cover sheet, and detail sheet — start from a real sheet instead
-        of a blank page.</p>
-
-        <h3>Local-first, no strings</h3>
-        <p>Documents are ordinary <code>.plansheet</code> files on your disk.
-        No account, no cloud, no subscription — buy it once on the Mac App
-        Store and it's yours.</p>
-
-        <h3>Screenshots</h3>
-        <div class="screenshots">
-          <!-- TODO: screenshots — replace each slot below with
-               <img src="/images/drafting-table/screenshot-N.png" alt="..."> (3–5 total) -->
-          <div class="screenshot-slot">Screenshot 1 — placeholder</div>
-          <div class="screenshot-slot">Screenshot 2 — placeholder</div>
-          <div class="screenshot-slot">Screenshot 3 — placeholder</div>
-          <!-- optional slots 4 and 5 -->
+      <section class="s">
+        <div class="grid">
+          <div class="label mono">Sample sheet</div>
+          <div class="body">
+            <div class="phero">
+              <div>
+                <p>Import an STL, OBJ or USDZ file and Drafting Table projects it into a measured 2D line drawing, with real dimensions straight from the model geometry. The bracket below shows the kind of sheet it makes.</p>
+              </div>
+              <dl class="spec mono">
+                <div><dt>Status</dt><dd>On the Mac App Store</dd></div>
+                <div><dt>Platform</dt><dd>macOS 14 or later</dd></div>
+                <div><dt>Imports</dt><dd>STL, OBJ, USDZ, PDF, images</dd></div>
+                <div><dt>Output</dt><dd>Vector PDF and PNG, printed at exact scale</dd></div>
+                <div><dt>Pricing</dt><dd>One-time purchase</dd></div>
+              </dl>
+            </div>
+          </div>
+          <div class="pfig" id="dt-fig">
+            <div class="stage">
+              <div class="bar mono">
+                <div class="tools">
+                  <div class="seg" role="group" aria-label="View">
+                    <button type="button" data-view="front" aria-pressed="false">Front</button>
+                    <button type="button" data-view="top" aria-pressed="false">Top</button>
+                    <button type="button" data-view="right" aria-pressed="false">Right</button>
+                    <button type="button" data-view="iso" aria-pressed="true">Iso</button>
+                  </div>
+                  <div class="seg"><button type="button" id="dt-hidden" aria-pressed="true">Hidden lines</button></div>
+                </div>
+                <span>Drag to orbit · hover a part</span>
+              </div>
+              <div class="cv">
+                <canvas aria-label="Line drawing of a gusseted steel angle bracket with hidden lines and dimensions"></canvas>
+                <div class="ov"></div>
+                <p class="nogl mono" hidden>This drawing needs WebGL.</p>
+              </div>
+            </div>
+            <div class="panel mono">
+              <div class="phead"><span>Inspector</span><span>Sample part</span></div>
+              <dl class="insp">
+                <div><dt>Part</dt><dd>Gusseted angle bracket</dd></div>
+                <div><dt>Material</dt><dd>A36 steel</dd></div>
+                <div><dt>View</dt><dd id="dt-view">Isometric</dd></div>
+                <div><dt>Projection</dt><dd>Orthographic, third angle</dd></div>
+                <div><dt>Hidden lines</dt><dd id="dt-hid">Shown, dashed</dd></div>
+                <div><dt>Units</dt><dd>Inches</dd></div>
+              </dl>
+              <div class="phead"><span>Selection</span></div>
+              <p class="sel" id="dt-sel">Hover a part to inspect it.</p>
+            </div>
+          </div>
         </div>
       </section>
-      <footer>
-        <p><a href="/drafting-table/support/">Support</a> · <a href="/drafting-table/privacy/">Privacy Policy</a> · <a href="mailto:work@justice.engineering">work@justice.engineering</a></p>
-        <p>© 2026 David Justice. Mac App Store and the Mac App Store badge are trademarks of Apple Inc.</p>
-      </footer>
-    </div>
-  </body>
-</html>
+
+      <section class="s">
+        <div class="grid">
+          <div class="label mono">Features</div>
+          <div class="body">
+            <div class="features">
+              <div><h3>From 3D model to measured drawing</h3><p>Import an STL, OBJ or USDZ file and get a measured 2D line drawing. It's how the app's own icon was made: a drawing, by the app, of a drafting table.</p></div>
+              <div><h3>Trace over anything</h3><p>Bring in a PDF or image as an underlay, then calibrate it with two clicks and one real-world distance. Everything you draw and measure on top of it is true to scale.</p></div>
+              <div><h3>Draw, dimension, annotate</h3><p>Lines, dimensions, annotations, tables and scale bars, with snapping to keep it tidy. What the sheet says is what the thing measures.</p></div>
+              <div><h3>Print at exact scale</h3><p>Sheets export as true-vector PDF or PNG, so a drawing marked 1:10 comes off the printer at 1:10. Take it to the shop and put a ruler on it.</p></div>
+              <div><h3>Nine starter templates</h3><p>Title blocks, site plan, shop drawing, cut list, assembly and parts list, cover sheet and detail sheet. Start from a real sheet instead of a blank page.</p></div>
+              <div><h3>Local-first, no strings</h3><p>Documents are ordinary .plansheet files on your disk. No account, no cloud, no subscription. Buy it once on the Mac App Store and it's yours.</p></div>
+            </div>
+            <!-- TODO: screenshots (3–5) once they're rendered. -->
+            <p class="mono"><a href="/drafting-table/support/">Support</a> · <a href="/drafting-table/privacy/">Privacy policy</a></p>
+          </div>
+        </div>
+      </section>
