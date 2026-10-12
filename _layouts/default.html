@@ -26,9 +26,10 @@
       {% include footer.html %}
     </main>
     <script src="/assets/nav.js"></script>
-    {% if page.drawings %}
+    {% if page.drawings or page.engine %}
     <script src="/assets/three.r128.min.js"></script>
-    <script src="/assets/site.js"></script>
     {% endif %}
+    {% if page.drawings %}<script src="/assets/site.js"></script>{% endif %}
+    {% if page.engine %}<script src="/assets/engine.js"></script>{% endif %}
   </body>
 </html>
