@@ -28,14 +28,19 @@
     block:['Cylinder block','Cast iron, six cylinders in line'],
     head:['Cylinder head','Single overhead cam, two valves per cylinder'],
     cover:['Valve cover','Over the camshaft and rockers'],
-    timing:['Timing belt cover','The belt turns the camshaft and the injection pump'],
-    pump:['Injection pump','Rotary distributor type, driven by the timing belt'],
+    timing:['Timing belt cover','Belt between the injection pump pulley and the camshaft pulley'],
+    gears:['Timing gear case','Crank, idler and injection pump gears, with the oil pump inside'],
+    vacuum:['Vacuum pump','On the timing gear cover, for the brake booster'],
+    pump:['Injection pump','Rotary distributor type, gear driven off the crank; its pulley drives the cam belt'],
+    glow:['Glow plugs ×6','One per swirl chamber, on the intake side of the head'],
+    leak:['Nozzle leakage pipe','Returns spill fuel from the injectors'],
+    insulator:['Exhaust heat insulator','Shield over the exhaust manifold'],
     injectors:['Injectors ×6','One per cylinder, into the swirl chamber'],
     lines:['Injection lines','Six steel lines from the pump head'],
     intake:['Intake manifold','Naturally aspirated, opposite the exhaust (cross-flow head)'],
     exhaust:['Exhaust manifold','Two cast pieces: front 2 ports, rear 4 ports'],
     damper:['Crank pulley','Drives the accessory belts'],
-    water:['Water pump and fan clutch','Belt driven from the crank'],
+    water:['Water pump and fan clutch','On the accessory belt from the crank pulley'],
     alt:['Alternator','Belt driven from the crank'],
     steer:['Power steering pump','Second belt off the crank'],
     pan:['Oil pan','Deep sump at the front, over the front axle'],
@@ -43,7 +48,7 @@
     starter:['Starter motor','Bolted to the flywheel housing'],
     bell:['Flywheel housing','Mates to the transmission'],
     mounts:['Engine mounts','One each side of the block'],
-    outlet:['Water outlet','Thermostat housing, to the radiator'],
+    outlet:['Water outlet','Thermostat housing on the front of the head, to the radiator'],
     dipstick:['Oil dipstick','']
   };
 
@@ -110,25 +115,29 @@
   // lifting eyes
   box(-6,14,410,470,58,72,'head');box(668,688,410,470,-72,-58,'head');
 
-  // timing belt cover: hull around the crank, cam and pump pulleys
-  {const pts=hull(ring(0,0,118,48).concat(ring(0,385,82,48),ring(-150,190,78,48)));
-   prismX(pts,-38,38,'timing',4);}
-  // crank pulley with two grooves
-  cylX(96,-78,-62,0,0,'damper');cylX(84,-62,-52,0,0,'damper');cylX(96,-52,-38,0,0,'damper');cylX(30,-90,-78,0,0,'damper');
+  // timing gear case (crank, idler and pump gears; oil pump inside)
+  prismX(hull(ring(0,0,115,48).concat(ring(-80,110,45,48),ring(-150,190,82,48))),-45,45,'gears',4);
+  // upper timing belt cover: pump pulley up to the cam pulley only
+  prismX(hull(ring(-150,190,78,48).concat(ring(0,395,82,48))),-80,35,'timing',4);
+  prismX(hull(ring(0,395,70,40)),-45,57,'head',4);
+  // vacuum pump on the gear case
+  cylX(38,-100,-45,80,-120,'vacuum');cylX(14,-112,-100,80,-120,'vacuum');
+  // crank pulley ahead of the gear case, accessory belts only
+  cylX(96,-110,-92,0,0,'damper');cylX(84,-92,-84,0,0,'damper');cylX(96,-84,-70,0,0,'damper');cylX(50,-70,-45,0,0,'damper');cylX(30,-122,-110,0,0,'damper');
   // water pump pulley and fan clutch
-  cylX(58,-78,-62,250,0,'water');cylX(36,-62,-38,250,0,'water');cylX(70,-135,-80,250,0,'water');cylX(42,-150,-135,250,0,'water');
+  cylX(58,-110,-92,250,0,'water');cylX(36,-92,-45,250,0,'water');cylX(70,-170,-112,250,0,'water');cylX(42,-185,-170,250,0,'water');
   // alternator
-  cylX(68,-20,140,150,185,'alt');cylX(34,-78,-62,150,185,'alt');cylX(18,-62,-20,150,185,'alt');
+  cylX(68,-20,140,150,185,'alt');cylX(34,-110,-92,150,185,'alt');cylX(18,-92,-20,150,185,'alt');
   box(20,110,160,180,120,170,'alt');
   // power steering pump (second belt)
-  cylX(46,-30,100,-30,182,'steer');cylX(48,-62,-50,-30,182,'steer');cylX(16,-50,-30,-30,182,'steer');
+  cylX(46,-30,100,-30,182,'steer');cylX(48,-94,-82,-30,182,'steer');cylX(16,-82,-30,-30,182,'steer');
   // belts
-  belt(-70,[[0,0,96],[0,250,58],[185,150,34]]);
-  belt(-56,[[0,0,84],[182,-30,48]]);
+  belt(-101,[[0,0,96],[0,250,58],[185,150,34]]);
+  belt(-88,[[0,0,84],[182,-30,48]]);
 
   // injection pump, low on the -z side behind the cover
   cylX(50,0,175,190,-150,'pump');cylX(38,175,232,190,-150,'pump');
-  box(40,170,232,278,-186,-114,'pump');box(150,162,278,300,-160,-140,'pump');
+  box(40,170,232,278,-186,-114,'pump');box(170,190,140,190,-170,-125,'pump');box(150,162,278,300,-160,-140,'pump');
   const outlets=[];for(let i=0;i<6;i++){const a=i/6*Math.PI*2;outlets.push([232,190+Math.sin(a)*24,-150+Math.cos(a)*24]);}
   outlets.forEach(o=>cylX(5,232,244,o[1],o[2],'pump',null,12));
   // injectors on the intake (-z) side of the head, below the manifold; lines from the pump head
@@ -138,7 +147,10 @@
     cylAB(13,V(x,355,-168),V(x,350,-152),'injectors',20);
     const o=outlets[i];
     tube([[o[0]+12,o[1],o[2]],[o[0]+40,o[1]+10,o[2]-12],[x-20+i*4,300,-196],[x,348,-184],[x,355,-172]],3.5,'lines',48);
+    cylAB(5,V(x+30,330,-124),V(x+30,318,-100),'glow',14);cylAB(7,V(x+30,336,-136),V(x+30,330,-124),'glow',14);
   }
+  // leakage pipe across the injector tops
+  {const lp=[];for(let i=0;i<6;i++)lp.push([XC(i),360,-168]);lp.push([XC(5)+50,350,-172]);tube(lp,2.5,'leak',80);}
 
   // intake (cross-flow head: opposite the exhaust), plenum with six runners and an elbow
   cylX(42,70,620,398,-212,'intake');
@@ -149,6 +161,8 @@
   cylX(28,60,220,288,180,'exhaust');cylX(28,256,630,288,180,'exhaust');
   box(214,262,250,316,156,206,'exhaust');
   for(let i=0;i<6;i++){const x=XC(i);tube([[x,340,121],[x,326,152],[x,298,174]],18,'exhaust');}
+  // heat insulator over the manifold
+  prismX([[124,352],[205,326],[205,300],[199,300],[199,322],[124,346]],50,590,'insulator');
   tube([[238,252,184],[240,170,200],[248,40,212],[262,-110,214]],32,'exhaust');
 
   // oil pan, flange and rear sump
@@ -168,7 +182,7 @@
   box(170,240,0,70,124,180,'mounts');box(170,240,0,70,-180,-124,'mounts');
   cylAB(30,V(205,70,180),V(205,70,215),'mounts');cylAB(30,V(205,70,-180),V(205,70,-215),'mounts');
   // water outlet on the head front
-  cylAB(24,V(45,410,40),V(-10,455,40),'outlet');cylAB(34,V(48,406,40),V(40,414,40),'outlet');
+  cylAB(24,V(45,410,-60),V(-10,455,-60),'outlet');cylAB(34,V(48,406,-60),V(40,414,-60),'outlet');
 
   // ---------- camera ----------
   const bb=new THREE.Box3();meshes.forEach(m=>bb.expandByObject(m));
