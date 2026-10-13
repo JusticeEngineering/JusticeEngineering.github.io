@@ -201,3 +201,20 @@ ol.posts a:hover b{color:var(--accent)}
   ol.posts a{grid-template-columns:minmax(0,1fr)}
   ol.posts span{grid-column:1}
 }
+
+/* about */
+.about{padding-block:clamp(56px,9vw,120px);row-gap:40px}
+.about-text{grid-column:1 / span 7}
+.about h1{margin:0 0 28px;font-weight:420;font-size:clamp(30px,4vw,52px);line-height:1.05;letter-spacing:-.022em;text-wrap:balance}
+.about-text p{font-size:clamp(18px,1.6vw,21px);line-height:1.5;max-width:36em;margin:0 0 28px}
+.about-photo{grid-column:9 / span 4;margin:0}
+.about-photo img{width:100%;display:block}
+.about-photo .ph{aspect-ratio:4/5;border:1px dashed var(--rule);display:grid;place-items:center;color:var(--ink-2);font-size:12px}
+/* services */
+.svc{padding-block:clamp(56px,9vw,120px)}
+.svc-body{grid-column:1 / span 8}
+.svc h1{margin:0 0 28px;font-weight:420;font-size:clamp(30px,4vw,52px);letter-spacing:-.022em}
+.svc-list{margin:0 0 32px;padding-left:1.1em;font-size:clamp(20px,2vw,26px);line-height:1.35;letter-spacing:-.01em}
+.svc-list li{margin-bottom:10px}
+.clients{margin:56px 0 0;color:var(--ink-2);font-size:17px}
+@media (max-width:860px){.about-text,.about-photo,.svc-body{grid-column:1 / -1}.about-photo{max-width:360px}}
