@@ -2,7 +2,7 @@ title: Justice Engineering
 url: https://justice.engineering
 email: work@justice.engineering
 # Booking link for "Schedule a meeting" on the Services page. Leave empty to fall back to email.
-booking_url: ""
+booking_url: "https://cal.com/justiceengineering/intro"
 about_photo: ""
 markdown: kramdown
 exclude:
