@@ -1,0 +1,24 @@
+---
+layout: default
+title: Cart
+description: Your Justice Engineering cart.
+shop: true
+---
+      <div class="page-head grid">
+        <div class="eyebrow mono"><a href="/shop/">Shop</a></div>
+        <div>
+          <h1>Cart</h1>
+        </div>
+      </div>
+      <div class="cart grid" data-cart>
+        <div class="cart-body">
+          <p class="cart-empty" data-cart-empty>Your cart is empty. <a href="/shop/">Back to the shop</a>.</p>
+          <ul class="cart-lines" data-cart-lines></ul>
+          <div class="cart-foot" data-cart-foot hidden>
+            <p><span class="mono">Subtotal</span> <b data-cart-subtotal></b></p>
+            <p class="mono">Shipping and tax are added at checkout.</p>
+            <a class="btn primary" data-checkout href="#">Check out</a>
+          </div>
+          <p class="buy-msg mono" role="status" aria-live="polite" data-cart-msg></p>
+        </div>
+      </div>

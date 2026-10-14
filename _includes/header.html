@@ -10,6 +10,8 @@
           <li><a href="/services/"><b>Services</b><span>Engineering, consulting and audits</span></a></li>
         </ul>
       </div>
+      {% if site.products.size > 0 %}<a href="/shop/">Shop</a>
+      <a href="/shop/cart/" id="cart-link" hidden>Cart (<span>0</span>)</a>{% endif %}
       <a href="/blog/">Blog</a>
       <a href="/about/">About</a>
     </nav>

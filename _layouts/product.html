@@ -1,0 +1,24 @@
+---
+layout: default
+---
+      <div class="product grid" data-product="{{ page.handle }}">
+        <figure class="product-img">
+          {% if page.image != "" %}<img src="{{ page.image }}" alt="{{ page.image_alt }}">{% else %}<div class="ph mono">Image to come</div>{% endif %}
+        </figure>
+        <div class="product-info">
+          <p class="crumb mono"><a href="/shop/">Shop</a> / {% if page.kind == "digital" %}Digital{% else %}Shipped{% endif %}</p>
+          <h1>{{ page.title }}</h1>
+          <p class="price" data-price>{% if page.price != "" %}{{ page.price }}{% endif %}</p>
+          <form class="buy" data-buy>
+            <label class="variant mono" hidden>Option <select name="variant"></select></label>
+            {% if page.kind != "digital" %}<label class="qty mono">Qty <input name="qty" type="number" min="1" max="99" value="1" inputmode="numeric"></label>{% endif %}
+            <button class="btn primary" type="submit" disabled>Available soon</button>
+            <p class="buy-msg mono" role="status" aria-live="polite"></p>
+          </form>
+          <div class="prose">
+{{ content }}
+          </div>
+          <p class="delivery mono">{% if page.kind == "digital" %}{% if page.formats %}{{ page.formats }}. {% endif %}Delivered by email as a download link after purchase.{% else %}Ships from New York by USPS.{% endif %}</p>
+          {% if page.license %}<p class="license"><span class="mono">License</span> {{ page.license }}</p>{% endif %}
+        </div>
+      </div>

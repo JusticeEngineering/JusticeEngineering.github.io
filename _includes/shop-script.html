@@ -1,0 +1,4 @@
+{% if site.products.size > 0 %}
+    <script id="shop-config" type="application/json">{"domain":{{ site.shopify_domain | jsonify }},"token":{{ site.shopify_storefront_token | jsonify }},"version":{{ site.shopify_api_version | jsonify }}}</script>
+    <script type="module" src="/assets/shop.js"></script>
+    {% endif %}
