@@ -76,7 +76,9 @@ dl.spec dd{margin:0}
 .cv canvas{display:block;width:100%;height:clamp(340px,44vw,580px);cursor:grab;touch-action:pan-y}
 .cv canvas:active{cursor:grabbing}
 .cv canvas.hz{height:clamp(340px,50vw,640px)}
+#engine{padding-top:clamp(32px,4vw,56px)}
 #engine > .grid{border-top:0;padding-top:0}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .ov{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .nogl{position:absolute;inset:0;display:grid;place-items:center;margin:0;color:var(--ink-2)}
 .dl{position:absolute;left:0;top:0;font:400 11px var(--f-mono);background:var(--bg);color:var(--ink);padding:0 3px;white-space:nowrap;font-variant-numeric:tabular-nums}
