@@ -90,7 +90,10 @@
   // ---------- passes ----------
   let W=1,H=1;
   const mkRT=depth=>{const t=new THREE.WebGLRenderTarget(1,1,{minFilter:THREE.NearestFilter,magFilter:THREE.NearestFilter});if(depth){t.depthTexture=new THREE.DepthTexture();t.depthTexture.type=THREE.UnsignedIntType;}return t;};
-  const rtN=mkRT(true),rtC=mkRT(false);
+  // Everything is drawn supersampled (SS× the canvas buffer) and averaged down,
+  // so thin lines stay put while the drawing turns instead of crawling pixel to pixel.
+  const rtN=mkRT(true),rtC=mkRT(false),rtE=new THREE.WebGLRenderTarget(1,1,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter});
+  let SS=2;
   const normalMat=new THREE.MeshNormalMaterial();
   const quadScene=new THREE.Scene(),quadCam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
   const edge=new THREE.ShaderMaterial({
@@ -111,15 +114,25 @@
       '}'].join('\n'),
     depthTest:false,depthWrite:false
   });
-  quadScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),edge));
+  const quad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),edge);quadScene.add(quad);
+  // box-filter the supersampled image down to the canvas: four bilinear taps cover an SS×SS block
+  const down=new THREE.ShaderMaterial({
+    uniforms:{tE:{value:rtE.texture},off:{value:new THREE.Vector2()}},
+    vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}',
+    fragmentShader:'uniform sampler2D tE;uniform vec2 off;varying vec2 vUv;void main(){gl_FragColor=.25*(texture2D(tE,vUv+off)+texture2D(tE,vUv-off)+texture2D(tE,vUv+vec2(off.x,-off.y))+texture2D(tE,vUv+vec2(-off.x,off.y)));}',
+    depthTest:false,depthWrite:false
+  });
 
   function size(){
     const w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;
     renderer.setSize(w,h,false);
     const bw=canvas.width,bh=canvas.height;W=w;H=h;
-    rtN.setSize(bw,bh);rtC.setSize(bw,bh);
-    edge.uniforms.texel.value.set(1/bw,1/bh);
-    edge.uniforms.stepPx.value=Math.max(1,renderer.getPixelRatio()*.85);
+    SS=Math.max(1,Math.min(2,Math.sqrt(6e6/(bw*bh))));
+    const sw=Math.round(bw*SS),sh=Math.round(bh*SS);
+    rtN.setSize(sw,sh);rtC.setSize(sw,sh);rtE.setSize(sw,sh);
+    down.uniforms.off.value.set(SS/4/bw,SS/4/bh);
+    edge.uniforms.texel.value.set(1/sw,1/sh);
+    edge.uniforms.stepPx.value=Math.max(1,renderer.getPixelRatio()*.85*SS);
     const asp=w/h,hh=Math.max(R*.62,R*.86/asp);
     cam.left=-hh*asp;cam.right=hh*asp;cam.top=hh;cam.bottom=-hh;cam.updateProjectionMatrix();
     needs=true;
@@ -179,7 +192,9 @@
     cam.layers.enableAll();scene.overrideMaterial=null;
     renderer.setRenderTarget(rtC);renderer.setClearColor(BG,1);renderer.clear();renderer.render(scene,cam);
     // pass 3: ink the edges
-    renderer.setRenderTarget(null);renderer.render(quadScene,quadCam);
+    quad.material=edge;renderer.setRenderTarget(rtE);renderer.render(quadScene,quadCam);
+    // pass 4: average down to the canvas
+    quad.material=down;renderer.setRenderTarget(null);renderer.render(quadScene,quadCam);
     if(out)out.textContent='Az '+deg(-yaw+Math.PI).toFixed(0).padStart(3,'0')+'° · El '+(pitch*180/Math.PI).toFixed(0).padStart(2,'0')+'°';
   }
   requestAnimationFrame(frame);
