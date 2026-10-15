@@ -1,0 +1,22 @@
+---
+layout: default
+title: Services
+description: Product engineering, consulting, hardware interfaces and Exposure audits from Justice Engineering in New York.
+---
+      {% if site.booking_url != "" %}{% assign book = site.booking_url %}{% else %}{% assign book = "mailto:" | append: site.email | append: "?subject=Meeting%20request" %}{% endif %}
+      <div class="svc grid">
+        <div class="svc-body">
+          <h1>Services</h1>
+          <ul class="svc-list">
+            <li>Product engineering, full stack, any language</li>
+            <li>Consulting</li>
+            <li>Hardware interfaces</li>
+            <li id="exposure-audit">Exposure audits: what an AI-assisted reverse engineer can pull out of the apps you ship</li>
+          </ul>
+          <div class="ctas">
+            <a class="btn primary" href="mailto:{{ site.email }}">Email</a>
+            <a class="btn" href="{{ book }}">Schedule a meeting</a>
+          </div>
+          <p class="clients">Clients: Mozilla Firefox, Protocol Labs, Richard Prince Studios, Trigram.</p>
+        </div>
+      </div>
