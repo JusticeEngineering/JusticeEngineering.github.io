@@ -1,0 +1,26 @@
+---
+layout: default
+title: Shop
+description: Plans, 3D models and shop goods from Justice Engineering in New York.
+shop: true
+---
+      <div class="page-head grid">
+        <div class="eyebrow mono">Shop</div>
+        <div>
+          <h1>Shop</h1>
+          <p>Plans and models you download, and goods shipped from New York.</p>
+        </div>
+      </div>
+      {% assign products = site.products | sort: "order" %}
+      {% if products.size == 0 %}<p class="cart-empty">Nothing for sale yet.</p>{% endif %}
+      <ul class="catalog">
+        {% for p in products %}
+        <li>
+          <a href="{{ p.url }}" data-price-handle="{{ p.handle }}">
+            <span class="cat-img">{% if p.image != "" %}<img src="{{ p.image }}" alt="" loading="lazy">{% else %}<span class="ph mono">Image to come</span>{% endif %}</span>
+            <b>{{ p.title }}</b>
+            <span class="mono"><span data-price>{{ p.price }}</span>{% if p.kind == "digital" %}Download{% else %}Shipped{% endif %}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>

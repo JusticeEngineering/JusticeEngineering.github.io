@@ -5,5 +5,14 @@ email: work@justice.engineering
 booking_url: "https://cal.com/justiceengineering/intro"
 about_photo: ""
 markdown: kramdown
+# Shop: products come from _products/, prices, stock and checkout from Shopify's Storefront API.
+# Leave the domain or token empty and the shop still renders, with buy buttons disabled.
+shopify_domain: ""            # e.g. justice-engineering.myshopify.com
+shopify_storefront_token: ""  # public Storefront API token from the Headless channel (safe to commit)
+shopify_api_version: "2026-07"
+collections:
+  products:
+    output: true
+    permalink: /shop/:name/
 exclude:
   - README.md

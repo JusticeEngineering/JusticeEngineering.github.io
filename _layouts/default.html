@@ -18,6 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,300..700&family=Geist+Mono:wght@400;500&display=swap">
     <link rel="stylesheet" href="/assets/site.css">
+    {% if page.shop or page.collection == "products" %}<link rel="stylesheet" href="/assets/shop.css">{% endif %}
   </head>
   <body>
     {% include header.html %}
@@ -26,6 +27,7 @@
       {% include footer.html %}
     </main>
     <script src="/assets/nav.js"></script>
+    {% include shop-script.html %}
     {% if page.drawings or page.engine %}
     <script src="/assets/three.r128.min.js"></script>
     {% endif %}
