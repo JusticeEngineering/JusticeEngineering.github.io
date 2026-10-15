@@ -15,11 +15,17 @@
   const V=(x,y,z)=>new THREE.Vector3(x,y,z);
   const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const BG=new THREE.Color(css('--bg')||'#fff'),INK=new THREE.Color(css('--line')||'#1a1d1b'),ACC=new THREE.Color(css('--accent')||'#a83d26');
+  const BG=new THREE.Color(css('--bg')||'#fff'),INK=new THREE.Color(css('--line')||'#1a1d1b');
 
   const scene=new THREE.Scene();
   const plain=new THREE.MeshBasicMaterial({color:BG});
-  const tint=new THREE.MeshBasicMaterial({color:BG.clone().lerp(ACC,.16)});
+  // hover fills: dim, weathered finishes, one per part
+  const WORN={block:'#5a5f5c',head:'#6b6e68',cover:'#8a8f86',timing:'#3f4a3c',gears:'#6f6a5c',vacuum:'#7a7461',
+    pump:'#6b7350',injectors:'#8c7a5b',lines:'#7d6a55',leak:'#8a7f66',glow:'#9a8a62',intake:'#a39a84',
+    exhaust:'#8a4b2f',insulator:'#9c6b4a',damper:'#4e5257',belts:'#3b3a37',water:'#5f6b73',alt:'#7c7f78',
+    steer:'#53604f',pan:'#6a4f3c',filter:'#7e6d3f',starter:'#4d5a52',flywheel:'#5b5650',mounts:'#4a4a44',
+    outlet:'#5c6f6a',dipstick:'#b0954f'};
+  const tints={};for(const k in WORN)tints[k]=new THREE.MeshBasicMaterial({color:BG.clone().lerp(new THREE.Color(WORN[k]),.55)});
   const meshes=[];
   const MESH=1;
 
@@ -143,7 +149,7 @@
   let hover=null;
   function setHover(part){
     if(part===hover)return;hover=part;
-    meshes.forEach(m=>{m.material=m.userData.part===part?tint:plain;});
+    meshes.forEach(m=>{m.material=m.userData.part===part?(tints[part]||plain):plain;});
     if(part){const p=PARTS[part];selEl.innerHTML='<b>'+p[0]+'</b>'+(p[1]?'<br>'+p[1]:'');}
     else selEl.textContent='Hover a part to name it.';
     needs=true;

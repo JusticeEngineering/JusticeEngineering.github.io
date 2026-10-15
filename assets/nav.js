@@ -1,4 +1,4 @@
-// Software menu: opens on hover via CSS; this adds click/tap and Escape for touch and keyboard.
+// Products menu: opens on hover via CSS; this adds click/tap and Escape for touch and keyboard.
 (function(){
   document.querySelectorAll('.dd').forEach(function(dd){
     var btn=dd.querySelector('.dd-btn');
