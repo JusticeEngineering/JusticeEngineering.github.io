@@ -20,12 +20,12 @@
   const scene=new THREE.Scene();
   const plain=new THREE.MeshBasicMaterial({color:BG});
   // hover fills: dim, weathered finishes, one per part
-  const WORN={block:'#5a5f5c',head:'#6b6e68',cover:'#8a8f86',timing:'#3f4a3c',gears:'#6f6a5c',vacuum:'#7a7461',
-    pump:'#6b7350',injectors:'#8c7a5b',lines:'#7d6a55',leak:'#8a7f66',glow:'#9a8a62',intake:'#a39a84',
-    exhaust:'#8a4b2f',insulator:'#9c6b4a',damper:'#4e5257',belts:'#3b3a37',water:'#5f6b73',alt:'#7c7f78',
-    steer:'#53604f',pan:'#6a4f3c',filter:'#7e6d3f',starter:'#4d5a52',flywheel:'#5b5650',mounts:'#4a4a44',
-    outlet:'#5c6f6a',dipstick:'#b0954f'};
-  const tints={};for(const k in WORN)tints[k]=new THREE.MeshBasicMaterial({color:BG.clone().lerp(new THREE.Color(WORN[k]),.55)});
+  const WORN={block:'#4f6d7a',head:'#7a8b5c',cover:'#b5523b',timing:'#2f5d62',gears:'#8c6d46',vacuum:'#a3678a',
+    pump:'#6b7a3a',injectors:'#c08a3e',lines:'#9a5a3c',leak:'#5d7f9e',glow:'#d1a33c',intake:'#5f9a8b',
+    exhaust:'#a2452a',insulator:'#c27c4a',damper:'#3e5f8a',belts:'#3b3a37',water:'#3f7f86',alt:'#8a3f3f',
+    steer:'#6a5a8c',pan:'#7a4a2a',filter:'#c4a24a',starter:'#4f7a52',flywheel:'#6e6259',mounts:'#556b2f',
+    outlet:'#4d8f7a',dipstick:'#d6b24a'};
+  const tints={};for(const k in WORN)tints[k]=new THREE.MeshBasicMaterial({color:BG.clone().lerp(new THREE.Color(WORN[k]),.68)});
   const meshes=[];
   const MESH=1;
 
