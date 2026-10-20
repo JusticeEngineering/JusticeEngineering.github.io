@@ -2,12 +2,32 @@
 layout: default
 ---
       <div class="product grid" data-product="{{ page.handle }}">
-        <figure class="product-img">
-          {% if page.image != "" %}<img src="{{ page.image }}" alt="{{ page.image_alt }}">{% else %}<div class="ph mono">Image to come</div>{% endif %}
-        </figure>
+        <div class="product-media">
+          <figure class="product-img{% unless page.gallery %} framed{% endunless %}">
+            {% if page.image != "" %}<img src="{{ page.image }}" alt="{{ page.image_alt }}">{% else %}<div class="ph mono">Image to come</div>{% endif %}
+            {% if page.image_caption %}<figcaption class="mono">{{ page.image_caption }}</figcaption>{% endif %}
+          </figure>
+          {% if page.gallery %}
+          <div class="gallery">
+            {% for g in page.gallery %}
+            <figure>
+              <a href="{{ g.src }}"><img src="{{ g.src }}" alt="{{ g.alt }}" loading="lazy"></a>
+              <figcaption class="mono">{{ g.caption }}</figcaption>
+            </figure>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if page.video %}
+          <figure class="product-video">
+            <video src="{{ page.video.src }}" controls muted loop playsinline preload="metadata"></video>
+            <figcaption class="mono">{{ page.video.caption }}</figcaption>
+          </figure>
+          {% endif %}
+        </div>
         <div class="product-info">
           <p class="crumb mono"><a href="/shop/">Shop</a> / {% if page.kind == "digital" %}Digital{% else %}Shipped{% endif %}</p>
           <h1>{{ page.title }}</h1>
+          {% if page.subject %}<p class="subject">{{ page.subject }}</p>{% endif %}
           <p class="price" data-price>{% if page.price != "" %}{{ page.price }}{% endif %}</p>
           <form class="buy" data-buy>
             <label class="variant mono" hidden>Option <select name="variant"></select></label>
@@ -15,9 +35,30 @@ layout: default
             <button class="btn primary" type="submit" disabled>Available soon</button>
             <p class="buy-msg mono" role="status" aria-live="polite"></p>
           </form>
+          {% if page.editions %}
+          <div class="editions">
+            {% for e in page.editions %}
+            <div class="edition">
+              <h2><span class="tag mono">{% if e.kind == "detailed" %}Detailed{% else %}Real-time{% endif %}</span> {{ e.name }}</h2>
+              <p>{{ e.text }}</p>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
           <div class="prose">
 {{ content }}
           </div>
+          {% if page.downloads %}
+          <div class="files">
+            <h2 class="mono">Download{% if page.downloads.size > 1 %}s{% endif %}</h2>
+            <ul>
+              {% for d in page.downloads %}
+              <li><b class="mono">{{ d.file }}</b> <span class="mono">{{ d.bytes | divided_by: 1048576.0 | round: 1 }} MB</span><span>{{ d.contains }}</span>
+                <details><summary class="mono">SHA-256</summary><code>{{ d.sha256 }}</code></details></li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
           <p class="delivery mono">{% if page.kind == "digital" %}{% if page.formats %}{{ page.formats }}. {% endif %}Delivered by email as a download link after purchase.{% else %}Ships from New York by USPS.{% endif %}</p>
           {% if page.license %}<p class="license"><span class="mono">License</span> {{ page.license }}</p>{% endif %}
         </div>
