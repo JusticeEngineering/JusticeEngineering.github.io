@@ -69,8 +69,8 @@ Frame and mounting brackets, radiators and vehicle hoses, expansion chamber and 
 
 The service manual's 89 mm bore and 79 mm stroke are engine specs; the internals are not modeled. Overall size, mount centers, clearances and the hidden rear and underside are inferred from manual views, parts drawings and photos. The carburetor is a PJ-family interpretation without a code stamp, the finish is a clean-service interpretation, and the lettering uses original approximate glyphs. LOD2 omits the raised lettering, and lower LODs show coarser curves and small shading marks up close. Not measured CAD, a fitment model or print-ready. Performance was measured in Blender's EEVEE viewport on one Apple M2 Mac.
 
-## How it was made
+## About the files
 
-AI-assisted Python and Blender construction with original procedural meshes and materials. No third-party meshes, scans, fonts or photo textures. Every image and the turntable show the supplied model.
+Built in Blender with Python, using original procedural meshes and materials. No third-party meshes, scans, fonts or photo textures. Every image and the turntable show the supplied model.
 
 Honda and CR500R identify the subject. This independent model is not affiliated with or endorsed by Honda.

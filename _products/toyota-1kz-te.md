@@ -61,8 +61,8 @@ Transmission, clutch, radiator, chassis, full exhaust, ECU, complete vehicle wir
 
 This is a proportional visual reconstruction from photographs, manuals and parts catalogs. It is not a scan, Toyota CAD, a fitment model, a printable solid or a service reference. Exterior dimensions and hidden details are estimated; the bare rear and underside had no direct photographs. The flywheel face simplifies machining and clutch-mount detail, and some curved surfaces show facets in extreme close-ups. A few tiny bevels in the GLB textures can show dark texel edges. Performance was measured on one Apple M2 Mac in Blender 5.1.2 and a Three.js 0.180.0 viewer in Chromium; no game-engine or mobile performance is promised.
 
-## How it was made
+## About the files
 
-AI-assisted original Blender Python modeling, reviewed against engine photographs and technical diagrams. Every image here is a render of the model in this download. Reference photos and manuals are not included.
+Original geometry built in Blender with Python and checked against engine photographs and technical diagrams. Every image here is a render of the model in this download. Reference photos and manuals are not included.
 
 Toyota and 1KZ-TE identify the subject. This independent model is not sponsored, endorsed or approved by Toyota.

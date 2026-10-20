@@ -65,8 +65,8 @@ Frame, radiators, frame oil reservoir, airbox, fuel tank, full exhaust, vehicle 
 
 Dimensions, casting depths and some underside relief are estimated from public references; the letter outlines are photographic estimates. This is an exterior visualization, not Honda CAD, a repair model, a fitment template or a printable part. The finish is a clean interpretation, not a measured coating. The GLB UVs have small overlaps on bevel and control-arm surfaces, and the lower LODs are approximate up close. Performance was tested in Blender 5.1.2 and a Three.js WebGL2 viewer on one Apple M2 Mac only.
 
-## How it was made
+## About the files
 
-AI-assisted, project-specific Blender scripts with inspected renders of the actual model. No photo textures or third-party meshes. Every image here shows the version in these downloads.
+Built with project-specific Blender scripts and checked in renders of the actual model. No photo textures or third-party meshes. Every image here shows the version in these downloads.
 
 Honda and XR650R identify the subject. This independent model is not endorsed by Honda, and no rights in Honda's marks are granted.

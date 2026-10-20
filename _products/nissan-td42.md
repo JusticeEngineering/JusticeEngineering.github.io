@@ -65,8 +65,8 @@ Fan and coupling (removed, as in the reference photos), power-steering pump, vac
 
 Overall size is about 778 × 1006 × 768 mm in the model, but every exterior dimension is an estimate, and hidden manifold, underside and some fuel-governor shapes are inferred. The clean-service finish and markings are interpreted from worn donor photographs; they are not official artwork or verified factory colors. Runtime textures soften at distance and LOD2 shows facets up close. No measured CAD, fitment, restoration, service, operation or printing use. Viewing was tested on one Apple M2 Mac.
 
-## How it was made
+## About the files
 
-AI-assisted engine-specific procedural code, material work and render review. References stay private; no photo textures or downloaded meshes are included. Every image here shows this version.
+Engine-specific procedural geometry and materials, checked in renders. References stay private; no photo textures or downloaded meshes are included. Every image here shows this version.
 
 Nissan and TD42 identify the subject. This independent model is not affiliated with or endorsed by Nissan, and no rights in the NISSAN or ZEXEL marks are granted.

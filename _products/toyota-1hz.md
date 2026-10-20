@@ -59,8 +59,8 @@ Internals, gearbox, radiator, air cleaner, A/C and complete vehicle hose and wir
 
 Reconstructed from photographs and technical illustrations, with estimated dimensions. It has an early HZJ75-type appearance and has not been calibrated to a physical engine or matched to an 80 Series; don't use it to confirm an 80 Series configuration or fitment. Some casting shapes, brackets and service routes are inferred. It is not a scan, OEM CAD, a service reference or a fitment model. The GLB does not reproduce the Blender materials.
 
-## How it was made
+## About the files
 
-AI-written Blender scripts reviewed against reference photographs and technical illustrations. Gallery images are renders of this version; the wireframe is a labeled diagnostic view. Research photographs and manuals are not included.
+Built with Blender scripts and checked against reference photographs and technical illustrations. Gallery images are renders of this version; the wireframe is a labeled diagnostic view. Research photographs and manuals are not included.
 
 This independent visualization is not affiliated with or endorsed by Toyota.

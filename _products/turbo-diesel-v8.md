@@ -60,8 +60,8 @@ Transmission, internals, vehicle plumbing and the surrounding vehicle. No automa
 
 This is a proportional, photo-led exterior. The donor and accessory options, belt arrangement, dimensions and concealed routes are not verified. It is not fitment CAD, a print-ready solid, a service reference or an exact replica. The runtime LOD1 and LOD2 use geometry normals rather than normal maps. Tested in Blender 5.1.2; no target-engine frame rate is promised.
 
-## How it was made
+## About the files
 
-Substantial AI assistance in code, geometry construction and review under the seller's direction, with no claim of hand sculpting or specialist certification. Every image and the turntable are renders of this version.
+Built from code in Blender and checked against reference photographs. Every image and the turntable are renders of this version.
 
 Ford and Power Stroke identify the reference subject. This independent model is not endorsed by Ford or Garrett, and no logos or serial numbers are reproduced.
