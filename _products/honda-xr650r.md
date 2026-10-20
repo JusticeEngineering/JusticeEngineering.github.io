@@ -3,6 +3,7 @@ layout: product
 title: Honda XR650R engine exterior
 subject: 2000 USA non-California XR650R engine, with HONDA lettering cast on both side covers.
 summary: Detailed Blender model and a baked real-time GLB edition, sold as separate downloads.
+description: "Editable Honda XR650R engine exterior for Blender and a baked real-time GLB with three levels of detail. Procedural materials, cast side-cover lettering. Estimated dimensions."
 handle: honda-xr650r
 kind: digital
 price: ""
@@ -10,6 +11,8 @@ order: 2
 published: false
 # Package record, not rendered. Source: engines/honda_xr650r/delivery/XR650R_C002/
 review:
+  release: shop_2026-10-20_r1 (output/shop_2026-10-20_r1/honda_xr650r/, CATALOG.json)
+  seller_kit: honda_xr650r_seller_shop_2026-10-20_r1.zip is not a customer download
   candidate: XR650R_C002
   owner_approval: not recorded (only decision on file is C001 continue_with_corrections)
   channel: license, price and sales channel are owner decisions (docs/CHANNEL_ASSESSMENT.md)
@@ -43,16 +46,16 @@ editions:
     text: "Editable Blender 5.1.2 assembly with 229 visible meshes (161,322 evaluated triangles), procedural materials and no external textures. Append XR650R_ENGINE and move it with XR650R_ROOT. Includes the generator scripts."
   - name: Baked GLB
     kind: realtime
-    text: "Three self-contained GLBs: LOD0 88,526, LOD1 44,100 and LOD2 17,640 triangles. One material and a 2048-pixel base color, normal and ORM atlas per LOD. All pass the Khronos glTF validator with no errors or warnings."
+    text: "Three self-contained GLBs: LOD0 88,526, LOD1 44,100 and LOD2 17,640 triangles. One material and a 2048-pixel base color, normal and ORM atlas per LOD. All pass the Khronos glTF validator with no errors or warnings and import cleanly into Blender."
 downloads:
-  - file: XR650R_Detailed_C002.zip
-    bytes: 583972
-    sha256: 1724a2fae6cab3ff5084490d9c996faa47e6ea5149ec5fb1acc912d58d036829
-    contains: Blender model, source scripts and buyer guide.
-  - file: XR650R_Realtime_C002.zip
-    bytes: 24949797
-    sha256: 7f76772469a2fafe0b77858178327c1ea3320136d28fef426ea704f48b925037
-    contains: Three GLBs, runtime Blender file, textures and buyer guide.
+  - file: XR650R_Detailed_C002_shop_2026-10-20_r1.zip
+    bytes: 583947
+    sha256: e4b726d11130386ea20e6f17be8bddd3a84ef4071f2dd4fbcf45f71d33343318
+    includes: Blender model, source scripts and buyer guide.
+  - file: XR650R_Realtime_C002_shop_2026-10-20_r1.zip
+    bytes: 24949769
+    sha256: 96934b053c3b92b34f6d7fcb55fe81036e5d01867f43f6bf707aaac1e8724923
+    includes: Three GLBs, runtime Blender file, textures and buyer guide.
 license: "Draft editorial terms. Modify the model and use renders in editorial, journalistic, cultural or newsworthy work about the engine. No redistribution or resale of the files. The final license is shown before checkout."
 ---
 Includes the cases and gearbox exterior, cylinder, head and rocker cover, side covers, water pump and filter, a stock-style PE carburetor and insulator, paired exhaust ports, five mount axes, countershaft sprocket and guard, kickstart and shift lever, and engine-side fittings. The HONDA marks on the clutch and alternator covers are modeled as seated geometry, drawn from photographs.

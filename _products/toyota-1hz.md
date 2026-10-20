@@ -3,6 +3,8 @@ layout: product
 title: Toyota 1HZ engine exterior
 subject: Estimated early HZJ75-type 1HZ diesel exterior, version 0.1.0.
 summary: Detailed Blender model with procedural materials, studio and cameras, plus a GLB preview.
+seo_title: "Toyota 1HZ Engine Model for Blender | Exterior Visualization"
+description: "Editable Toyota 1HZ exterior model for Blender renders. Includes procedural materials, organized assemblies, studio cameras and a GLB preview. Estimated dimensions."
 handle: toyota-1hz
 kind: digital
 price: ""
@@ -10,12 +12,13 @@ order: 6
 published: false
 # Package record, not rendered. Source: output/1hz/shop_v0.1.0/
 review:
+  release: shop_2026-10-20_r1 (output/shop_2026-10-20_r1/toyota_1hz/, CATALOG.json)
+  seller_kit: toyota_1hz_seller_shop_2026-10-20_r1.zip is not a customer download
   candidate: shop_v0.1.0 (older private shop-test package)
   owner_approval: not recorded; README calls it a private storefront test
   channel: direct store private test; public branded-product rights and legal terms still under review
   price: USD 29 is the README's provisional private-test price, not a final price
   terms: 1HZ Visualization Asset License 1.0, prepared draft for review
-  seller_only: 1HZ_Seller_Kit_v0.1.0.zip is not a customer download
 image: /assets/shop/toyota-1hz/01_hero_wide.jpg
 image_alt: Toyota 1HZ model from the injection-side front quarter in a Blender studio
 image_caption: Native Blender render; studio and display supports included
@@ -41,13 +44,13 @@ video:
 editions:
   - name: Blender model
     kind: detailed
-    text: "Native Blender 5.1.2 scene with 1,068 engine objects (641,006 evaluated triangles), eight assembly controls, six editable fuel-pipe curves, procedural materials, a lit studio and eleven cameras. Includes a GLB exchange preview, which has simpler materials and is not an optimized real-time edition."
+    text: "Native Blender 5.1.2 scene with 1,068 engine objects (641,006 evaluated triangles), eight assembly controls, six editable fuel-pipe curves, procedural materials, a lit studio and eleven cameras. Includes a GLB exchange preview (639,262 triangles), which has simpler materials and is not an optimized real-time edition. No external textures or add-ons required."
 downloads:
-  - file: 1HZ_Exterior_v0.1.0.zip
-    bytes: 9198516
-    sha256: 30acc13f0dec62788ca51c32e66063c36a2c20e47c15ebc90ecb09b23268f489
-    contains: Blender scene, GLB preview, buyer guide, license, changelog and checksums.
-license: "Draft single-user license. Unlimited personal and commercial rendered projects, client deliverables allowed, no attribution. Sharing or reselling the files is prohibited. Updates through 0.x and 1.x included. The final license is shown before checkout."
+  - file: 1HZ_Exterior_v0.1.0_shop_2026-10-20_r1.zip
+    bytes: 9198512
+    sha256: 65974deb517a5818be2a30339cf7dd8c11de23ede3342055708d324fbc695e4a
+    includes: Blender scene, GLB preview, buyer guide, license, changelog and checksums.
+license: "Draft single-user license. Unlimited personal and commercial rendered projects, finished renders may go to clients, no attribution. Each person editing the source files needs a license. Sharing or reselling the files is prohibited. Updates through 0.x and 1.x included. The final license is shown before checkout."
 ---
 Includes the block and head, ribbed cover, intake crossover, exhaust assemblies, mechanical injection pump with six fuel pipes, belt drive, cooling fan, starter, alternator, steering pump, sump and exposed rear flywheel. A single root places the engine; append the `1HZ Engine` collection to bring it into another scene without the studio.
 
@@ -63,4 +66,16 @@ Reconstructed from photographs and technical illustrations, with estimated dimen
 
 Built with Blender scripts and checked against reference photographs and technical illustrations. Gallery images are renders of this version; the wireframe is a labeled diagnostic view. Research photographs and manuals are not included.
 
-This independent visualization is not affiliated with or endorsed by Toyota.
+## Questions
+
+**Is this an 80 Series engine replica?** No. This version has a provisional early HZJ75-type appearance. Don't use it to confirm an 80 Series configuration or fitment.
+
+**Will it look like the screenshots?** The screenshots are native Blender renders, and the studio and materials are included. The GLB has simpler materials and will look different.
+
+**Can I print it or animate the engine running?** It isn't prepared for printing or functional engine animation. You can animate its placement as a whole.
+
+**Can I make commercial renders?** The license permits them within the seller's rights. Any further rights needed for the Toyota name, marks or design are your responsibility.
+
+**Are future improvements included?** Released updates to this product through 0.x and 1.x are included. No specific future feature or date is promised.
+
+This independent visualization is not affiliated with or endorsed by Toyota. Toyota names, marks and the engine design belong to their owners, and this license doesn't grant rights in them.

@@ -3,6 +3,7 @@ layout: product
 title: Nissan TD42 engine exterior
 subject: Representative early Y60 naturally aspirated TD42 with inline injection pump, clean-service finish.
 summary: Detailed Blender model and an optimized real-time GLB edition, sold as separate downloads.
+description: "Editable Nissan TD42 engine exterior for Blender, clean-service finish, with optimized PBR GLB levels of detail. Inline injection pump, early Y60 layout. Estimated dimensions."
 handle: nissan-td42
 kind: digital
 price: ""
@@ -10,6 +11,8 @@ order: 3
 published: false
 # Package record, not rendered. Source: engines/nissan_td42/delivery/TD42-C002-2026-10-18/
 review:
+  release: shop_2026-10-20_r1 (output/shop_2026-10-20_r1/nissan_td42/, CATALOG.json)
+  seller_kit: nissan_td42_seller_shop_2026-10-20_r1.zip is not a customer download
   candidate: TD42-C002-2026-10-18 (clean service, restored as current on 2026-10-19; C003 worn finish not used)
   owner_approval: not recorded (all decisions on file have approval false)
   channel: DISTRIBUTION.md says the commercial/mark assessment for C002 is pending and C002 is not declared sale-ready
@@ -45,14 +48,14 @@ editions:
     kind: realtime
     text: "Three GLBs: LOD0 111,104 (about 1 m), LOD1 55,678 (about 2 m) and LOD2 21,322 triangles (about 4 m). One material and three 2048-pixel PBR maps each, plus a packed Blender file and an offline viewer."
 downloads:
-  - file: TD42_Detailed.zip
-    bytes: 2102397
-    sha256: 810106fad79efa5094651a57a634a95b10edb41f4e522bb88c1596cdb64d1075
-    contains: Blender model, source and buyer guide.
-  - file: TD42_Realtime.zip
-    bytes: 26315453
-    sha256: 28d13f445dd57c78a8403d101c33023a876f097bbe6449876db615defa54cfb1
-    contains: Three GLBs, Blender file, textures, viewer and buyer guide.
+  - file: TD42_Detailed_shop_2026-10-20_r1.zip
+    bytes: 2102384
+    sha256: fe4d84a34220fa8f7dcb25de8c73e8935fce8cbd5bcaf27b6a5e9f03d2a52c97
+    includes: Blender model, source and buyer guide.
+  - file: TD42_Realtime_shop_2026-10-20_r1.zip
+    bytes: 26315440
+    sha256: 119aeae680fbea563d180e2d590933a25ebfeb728fbca953ac5b3ad6627db6ab
+    includes: Three GLBs, Blender file, textures, viewer and buyer guide.
 license: "Draft terms. Use and modify in rendered images, video, education and embedded interactive projects, including commercial ones. No resale or redistribution of the asset. The final license is shown before checkout."
 ---
 Includes the block, head and silver-coated cover, rear-deep sump, front gear case, rear plate and crank flange, inline pump with six hard lines, intake and venturi, exhaust manifold and shield, twin filters and cooler, water pump, thermostat and heater pipes, alternator with rear vacuum pump, A/C compressor and idler, starter and engine mounts. The cover carries an original redrawing of the NISSAN print, the pump a small ZEXEL name plate, and the filler cap an oil-can icon.
@@ -67,6 +70,6 @@ Overall size is about 778 × 1006 × 768 mm in the model, but every exterior dim
 
 ## About the files
 
-Engine-specific procedural geometry and materials, checked in renders. References stay private; no photo textures or downloaded meshes are included. Every image here shows this version.
+Engine-specific procedural modeling and material development, reviewed in renders of the actual model. References stay private; no photo textures or downloaded meshes are included. Every image here shows this version.
 
 Nissan and TD42 identify the subject. This independent model is not affiliated with or endorsed by Nissan, and no rights in the NISSAN or ZEXEL marks are granted.

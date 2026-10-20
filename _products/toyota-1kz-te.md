@@ -3,6 +3,7 @@ layout: product
 title: Toyota 1KZ-TE engine exterior
 subject: Representative April 2004 Australian RHD manual KZN165 Hilux, non-intercooled 1KZ-TE.
 summary: Detailed Blender scene and three optimized GLB levels of detail, in one download.
+description: "Editable Toyota 1KZ-TE engine exterior for Blender, with three optimized GLB levels of detail. Procedural materials, named parts and a local viewer. Estimated dimensions."
 handle: toyota-1kz-te
 kind: digital
 price: ""
@@ -10,6 +11,8 @@ order: 1
 published: false
 # Package record, not rendered. Source: engines/toyota_1kz_te/delivery/c001_r028/
 review:
+  release: shop_2026-10-20_r1 (output/shop_2026-10-20_r1/toyota_1kz_te/, CATALOG.json)
+  seller_kit: toyota_1kz_te_seller_shop_2026-10-20_r1.zip is not a customer download
   candidate: c001_r028
   owner_approval: not recorded (pipeline/owner_decisions.json is empty)
   channel: justice.engineering recommended in REVIEW.md; CGTrader and Fab pending eligibility
@@ -45,10 +48,10 @@ editions:
     kind: realtime
     text: "Three separately baked GLBs: LOD0 117,966, LOD1 58,966 and LOD2 18,966 triangles. Two 2048-pixel PBR atlas sets per LOD, embedded and as PNGs, plus a local Three.js viewer. No automatic LOD switching or rig."
 downloads:
-  - file: c001_r028.zip
-    bytes: 37489884
-    sha256: b76548e1820a7657c8ff15c17b386ca3d995684c25476cc9ea25dc89fa402b2c
-    contains: Both editions, buyer guide, tested configuration and license.
+  - file: c001_r028_shop_2026-10-20_r1.zip
+    bytes: 37489881
+    sha256: 547082313f07b0a37cf103ee0c8cedc3839f1aaca47c009777feef18a263431e
+    includes: Both editions, buyer guide, tested configuration and license.
 license: "Draft terms. Use and modify for informational and editorial visualization, including monetized stills, video and interactive presentations about the engine. No resale or redistribution of the files. The final license is shown before checkout."
 ---
 The model includes the turbo and shields, the later EGR arrangement, injection pump and four pipes, oil cooler and filter, water pump and ten-blade fan, three belts, alternator, starter, AC compressor, gear-driven steering pump and reservoir, mounts, rear plate and flywheel, and the visible engine plumbing. The Blender scene keeps every part named and editable; use it for part edits and detailed renders. The GLBs are a separate, simplified real-time version, so the two will look different under different renderers.
