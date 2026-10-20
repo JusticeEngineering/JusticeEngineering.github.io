@@ -3,7 +3,7 @@
   <span class="fl">
     <a href="https://github.com/meandavejustice/resume/blob/master/DavidJusticeResume.pdf">Resume</a>
     <a href="mailto:{{ site.email }}">{{ site.email }}</a>
-    <a href="/blog/">Blog</a>
+    {% if site.posts.size > 0 %}<a href="/blog/">Blog</a>{% endif %}
     <span>No analytics. No cookies.</span>
   </span>
 </footer>

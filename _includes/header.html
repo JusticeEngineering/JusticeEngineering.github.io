@@ -10,7 +10,7 @@
         </ul>
       </div>
       <a href="/services/">Services</a>
-      <a href="/blog/">Blog</a>
+      {% if site.posts.size > 0 %}<a href="/blog/">Blog</a>{% endif %}
       <a href="/about/">About</a>
     </nav>
   </div>
