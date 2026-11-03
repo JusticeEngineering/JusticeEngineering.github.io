@@ -30,7 +30,7 @@ layout: default
           {% if page.subject %}<p class="subject">{{ page.subject }}</p>{% endif %}
           <p class="price" data-price>{% if page.price != "" %}{{ page.price }}{% endif %}</p>
           <form class="buy" data-buy>
-            <label class="variant mono" hidden>Option <select name="variant"></select></label>
+            <label class="variant mono" hidden>Edition <select name="variant"></select></label>
             {% if page.kind != "digital" %}<label class="qty mono">Qty <input name="qty" type="number" min="1" max="99" value="1" inputmode="numeric"></label>{% endif %}
             <button class="btn primary" type="submit" disabled>Available soon</button>
             <p class="buy-msg mono" role="status" aria-live="polite"></p>

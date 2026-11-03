@@ -47,6 +47,19 @@ editions:
   - name: PBR levels of detail
     kind: realtime
     text: "LOD0 75,909, LOD1 38,071 and LOD2 14,929 triangles, each with one material and three unique 2048-pixel maps. Supplied twice: as runtime Blender files and as GLBs with embedded textures. No automatic LOD switching."
+# Sold separately. Each edition's price falls back to `price` when it has none of its own.
+skus:
+  - key: honda-cr500r-blender
+    name: Blender model
+    price: ""
+    files:
+      - CR500R_1996_Detailed_Blender_shop_2026-10-20_r1.zip
+  - key: honda-cr500r-lods
+    name: PBR levels of detail
+    price: ""
+    files:
+      - CR500R_1996_Runtime_Blender_shop_2026-10-20_r1.zip
+      - CR500R_1996_Runtime_GLB_shop_2026-10-20_r1.zip
 downloads:
   - file: CR500R_1996_Detailed_Blender_shop_2026-10-20_r1.zip
     bytes: 34423072

@@ -6,6 +6,7 @@
     {% if page.seo_title %}{% assign full_title = page.seo_title %}{% elsif page.title %}{% assign full_title = page.title | append: " | " | append: site.title %}{% else %}{% assign full_title = site.title %}{% endif %}
     <title>{{ full_title }}</title>
     <meta name="description" content="{{ page.description }}">
+    {% if page.noindex %}<meta name="robots" content="noindex">{% endif %}
     <link rel="canonical" href="{{ site.url }}{{ page.url | replace: 'index.html', '' }}">
     <meta property="og:title" content="{{ full_title }}">
     <meta property="og:description" content="{{ page.description }}">

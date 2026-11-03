@@ -1,10 +1,10 @@
 ---
 layout: product
 title: Carpenter pencil
-# Shopify product handle. Price, variants and stock are read from Shopify by this handle.
+# Item key for the cart and checkout. Keep it stable once something has sold.
 handle: carpenter-pencil
 kind: physical
-# Shown until Shopify answers, and in place of a live price when the shop isn't connected.
+# US dollars. Empty means not for sale yet.
 price: ""
 image: /assets/shop/carpenter-pencil.jpg
 image_alt: Flat carpenter pencil printed with the Justice Engineering wordmark and a US flag

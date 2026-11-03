@@ -1,0 +1,4 @@
+node_modules/
+lib/catalog.generated.ts
+.vercel/
+.env*

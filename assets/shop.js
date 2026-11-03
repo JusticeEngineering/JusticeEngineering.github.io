@@ -1,151 +1,90 @@
 // @ts-check
-// Shop: talks to Shopify's Storefront API (public GraphQL, CORS-enabled) straight from the browser.
-// Product copy and images live in _products/; Shopify supplies price, variants, stock, the cart and checkout.
-// The cart id is kept in localStorage (no cookies on this site); checkout itself happens on Shopify.
+// Shop: product copy, images and prices live in _products/ and reach this script through the
+// #shop-config JSON that _includes/shop-script.html writes. The cart is kept in localStorage
+// (no cookies on this site). Checkout posts the cart to the shop service in shop-api/, which
+// prices it again from the same product files and hands the buyer to Stripe Checkout.
 
-/** @typedef {{ amount: string, currencyCode: string }} Money */
-/** @typedef {{ id: string, title: string, availableForSale: boolean, price: Money }} Variant */
-/** @typedef {{ id: string, quantity: number, cost: { totalAmount: Money }, merchandise: { id: string, title: string, product: { title: string, handle: string } } }} CartLine */
-/** @typedef {{ id: string, checkoutUrl: string, totalQuantity: number, cost: { subtotalAmount: Money }, lines: { edges: { node: CartLine }[] } }} Cart */
+/** @typedef {{ key: string, handle: string, product: string, name: string, price: number | null, shipped: boolean, url: string }} Item */
+/** @typedef {{ key: string, qty: number }} Line */
 
 const cfgEl = document.getElementById('shop-config');
-/** @type {{ domain: string, token: string, version: string }} */
-const cfg = cfgEl ? JSON.parse(cfgEl.textContent || '{}') : { domain: '', token: '', version: '' };
-const live = Boolean(cfg.domain && cfg.token);
+/** @type {{ api: string, items: Item[] }} */
+const cfg = cfgEl ? JSON.parse(cfgEl.textContent || '{}') : { api: '', items: [] };
+/** Items that can be bought now. */
+const items = new Map(cfg.items.filter((i) => cfg.api && i.price !== null).map((i) => [i.key, i]));
 const STORE_KEY = 'je-cart';
+const MAX_QTY = 99;
 
-const CART_FIELDS = `
-  id checkoutUrl totalQuantity
-  cost { subtotalAmount { amount currencyCode } }
-  lines(first: 100) { edges { node {
-    id quantity
-    cost { totalAmount { amount currencyCode } }
-    merchandise { ... on ProductVariant { id title product { title handle } } }
-  } } }`;
+/** @param {number} dollars */
+const money = (dollars) =>
+  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: Number.isInteger(dollars) ? 0 : 2 }).format(dollars);
 
-/**
- * @param {string} query
- * @param {Record<string, unknown>} [variables]
- * @returns {Promise<any>}
- */
-async function gql(query, variables = {}) {
-  const res = await fetch(`https://${cfg.domain}/api/${cfg.version}/graphql.json`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Shopify-Storefront-Access-Token': cfg.token },
-    body: JSON.stringify({ query, variables }),
-  });
-  if (!res.ok) throw new Error(`Shopify returned ${res.status}`);
-  const json = await res.json();
-  if (json.errors?.length) throw new Error(json.errors[0].message);
-  return json.data;
-}
-
-/** Throws on a mutation's userErrors and returns its cart. */
-function cartFrom(/** @type {{ cart: Cart | null, userErrors: { message: string }[] }} */ payload) {
-  if (payload.userErrors?.length) throw new Error(payload.userErrors[0].message);
-  if (!payload.cart) throw new Error('Cart not found');
-  return payload.cart;
-}
-
-/** @param {Money} m */
-const money = (m) =>
-  new Intl.NumberFormat('en-US', { style: 'currency', currency: m.currencyCode }).format(Number(m.amount));
+/** @param {Item} i */
+const label = (i) => (i.name ? `${i.product}, ${i.name}` : i.product);
 
 // ---- Cart storage and header count ----
 
-/** @returns {{ id: string, qty: number } | null} */
-function stored() {
-  try { return JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch { return null; }
+/** @returns {Line[]} the stored cart, without items no longer for sale */
+function load() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+    return Array.isArray(raw?.lines) ? raw.lines.filter((/** @type {Line} */ l) => items.has(l.key) && l.qty > 0) : [];
+  } catch { return []; }
 }
 
-/** @param {Cart | null} cart */
-function remember(cart) {
+/** @param {Line[]} lines */
+function save(lines) {
   try {
-    if (cart) localStorage.setItem(STORE_KEY, JSON.stringify({ id: cart.id, qty: cart.totalQuantity }));
+    if (lines.length) localStorage.setItem(STORE_KEY, JSON.stringify({ lines }));
     else localStorage.removeItem(STORE_KEY);
   } catch { /* storage blocked: the cart still works for this page view */ }
-  showCount(cart ? cart.totalQuantity : 0);
+  showCount(lines);
 }
 
-/** @param {number} qty */
-function showCount(qty) {
+/** @param {Line[]} lines */
+function showCount(lines) {
   const link = document.getElementById('cart-link');
   if (!link) return;
-  link.hidden = !(qty > 0);
+  const qty = lines.reduce((n, l) => n + l.qty, 0);
+  link.hidden = qty === 0;
   const n = link.querySelector('span');
   if (n) n.textContent = String(qty);
 }
 
-/** @returns {Promise<Cart | null>} */
-async function loadCart() {
-  const s = stored();
-  if (!s) return null;
-  const data = await gql(`query($id: ID!) { cart(id: $id) { ${CART_FIELDS} } }`, { id: s.id });
-  remember(data.cart); // a null cart has expired or been checked out
-  return data.cart;
+/**
+ * Adds an item; a download can only be in the cart once.
+ * @param {string} key @param {number} qty @returns {boolean} false when it was already there
+ */
+function add(key, qty) {
+  const item = /** @type {Item} */ (items.get(key));
+  const lines = load();
+  const line = lines.find((l) => l.key === key);
+  if (line && !item.shipped) return false;
+  if (line) line.qty = Math.min(MAX_QTY, line.qty + qty);
+  else lines.push({ key, qty: item.shipped ? qty : 1 });
+  save(lines);
+  return true;
 }
 
-/** @param {string} variantId @param {number} quantity @returns {Promise<Cart>} */
-async function addToCart(variantId, quantity) {
-  const lines = [{ merchandiseId: variantId, quantity }];
-  const s = stored();
-  if (s) {
-    try {
-      const data = await gql(
-        `mutation($id: ID!, $lines: [CartLineInput!]!) { cartLinesAdd(cartId: $id, lines: $lines) { cart { ${CART_FIELDS} } userErrors { message } } }`,
-        { id: s.id, lines });
-      const cart = cartFrom(data.cartLinesAdd);
-      remember(cart);
-      return cart;
-    } catch { /* expired or completed cart: start a new one below */ }
-  }
-  const data = await gql(
-    `mutation($lines: [CartLineInput!]!) { cartCreate(input: { lines: $lines }) { cart { ${CART_FIELDS} } userErrors { message } } }`,
-    { lines });
-  const cart = cartFrom(data.cartCreate);
-  remember(cart);
-  return cart;
-}
+// ---- Catalog ----
 
-/** @param {string} cartId @param {string} lineId @param {number} quantity @returns {Promise<Cart>} */
-async function setLineQty(cartId, lineId, quantity) {
-  const data = quantity > 0
-    ? (await gql(
-        `mutation($id: ID!, $lines: [CartLineUpdateInput!]!) { r: cartLinesUpdate(cartId: $id, lines: $lines) { cart { ${CART_FIELDS} } userErrors { message } } }`,
-        { id: cartId, lines: [{ id: lineId, quantity }] }))
-    : (await gql(
-        `mutation($id: ID!, $ids: [ID!]!) { r: cartLinesRemove(cartId: $id, lineIds: $ids) { cart { ${CART_FIELDS} } userErrors { message } } }`,
-        { id: cartId, ids: [lineId] }));
-  const cart = cartFrom(data.r);
-  remember(cart);
-  return cart;
-}
-
-// ---- Catalog: live prices for every listed product in one request ----
-
-async function initCatalog() {
-  const cards = /** @type {HTMLElement[]} */ ([...document.querySelectorAll('[data-price-handle]')]);
-  if (!cards.length || !live) return;
-  const vars = cards.map((_, i) => `$h${i}: String!`).join(', ');
-  const fields = cards
-    .map((_, i) => `p${i}: product(handle: $h${i}) { availableForSale priceRange { minVariantPrice { amount currencyCode } maxVariantPrice { amount currencyCode } } }`)
-    .join('\n');
-  const variables = Object.fromEntries(cards.map((c, i) => [`h${i}`, c.dataset.priceHandle]));
-  const data = await gql(`query(${vars}) { ${fields} }`, variables);
-  cards.forEach((card, i) => {
-    const p = data[`p${i}`];
+function initCatalog() {
+  for (const card of /** @type {NodeListOf<HTMLElement>} */ (document.querySelectorAll('[data-price-handle]'))) {
+    const prices = [...items.values()].filter((i) => i.handle === card.dataset.priceHandle).map((i) => /** @type {number} */ (i.price));
     const out = card.querySelector('[data-price]');
-    if (!p || !out) return;
-    const { minVariantPrice: min, maxVariantPrice: max } = p.priceRange;
-    out.textContent = !p.availableForSale ? 'Sold out' : (min.amount === max.amount ? '' : 'From ') + money(min);
-  });
+    if (!out || !prices.length) continue;
+    const min = Math.min(...prices);
+    out.textContent = (prices.some((p) => p !== min) ? 'From ' : '') + money(min);
+  }
 }
 
 // ---- Product page ----
 
-async function initProduct() {
+function initProduct() {
   const root = /** @type {HTMLElement | null} */ (document.querySelector('[data-product]'));
-  if (!root || !live) return;
+  if (!root) return;
+  const options = [...items.values()].filter((i) => i.handle === root.dataset.product);
+  if (!options.length) return; // stays "Available soon"
   const form = /** @type {HTMLFormElement} */ (root.querySelector('[data-buy]'));
   const button = /** @type {HTMLButtonElement} */ (form.querySelector('button'));
   const msg = /** @type {HTMLElement} */ (form.querySelector('.buy-msg'));
@@ -153,113 +92,139 @@ async function initProduct() {
   const select = /** @type {HTMLSelectElement} */ (form.querySelector('select'));
   const qtyInput = /** @type {HTMLInputElement | null} */ (form.querySelector('input[name=qty]'));
 
-  const data = await gql(
-    `query($h: String!) { product(handle: $h) { variants(first: 50) { nodes { id title availableForSale price { amount currencyCode } } } } }`,
-    { h: root.dataset.product });
-  /** @type {Variant[]} */
-  const variants = data.product?.variants.nodes ?? [];
-  if (!variants.length) { button.textContent = 'Not available yet'; return; }
-
-  if (variants.length > 1) {
-    for (const v of variants) select.add(new Option(v.availableForSale ? v.title : `${v.title} (sold out)`, v.id));
+  if (options.length > 1) {
+    for (const o of options) select.add(new Option(`${o.name} (${money(/** @type {number} */ (o.price))})`, o.key));
     /** @type {HTMLElement} */ (select.parentElement).hidden = false;
-    const first = variants.find((v) => v.availableForSale);
-    if (first) select.value = first.id;
   }
-  const current = () => variants.find((v) => v.id === select.value) ?? variants[0];
+  const current = () => options.find((o) => o.key === select.value) ?? options[0];
   const render = () => {
-    const v = current();
-    priceEl.textContent = money(v.price);
-    button.disabled = !v.availableForSale;
-    button.textContent = v.availableForSale ? 'Add to cart' : 'Sold out';
+    priceEl.textContent = money(/** @type {number} */ (current().price));
+    button.disabled = false;
+    button.textContent = 'Add to cart';
   };
-  select.addEventListener('change', render);
+  select.addEventListener('change', () => { msg.textContent = ''; render(); });
   render();
 
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const qty = Math.max(1, Math.min(99, Number(qtyInput?.value) || 1));
-    button.disabled = true;
-    msg.textContent = 'Adding…';
-    try {
-      await addToCart(current().id, qty);
-      msg.textContent = 'Added. ';
-      const a = document.createElement('a');
-      a.href = '/shop/cart/';
-      a.textContent = 'View cart';
-      msg.append(a);
-    } catch (err) {
-      msg.textContent = `Couldn't add to cart: ${/** @type {Error} */ (err).message}`;
-    } finally {
-      render();
-    }
+    const qty = Math.max(1, Math.min(MAX_QTY, Number(qtyInput?.value) || 1));
+    msg.textContent = add(current().key, qty) ? 'Added. ' : 'Already in your cart. ';
+    const a = document.createElement('a');
+    a.href = '/shop/cart/';
+    a.textContent = 'View cart';
+    msg.append(a);
   });
 }
 
 // ---- Cart page ----
 
-async function initCart() {
+function initCart() {
   const root = document.querySelector('[data-cart]');
   if (!root) return;
   const list = /** @type {HTMLElement} */ (root.querySelector('[data-cart-lines]'));
   const empty = /** @type {HTMLElement} */ (root.querySelector('[data-cart-empty]'));
   const foot = /** @type {HTMLElement} */ (root.querySelector('[data-cart-foot]'));
   const subtotal = /** @type {HTMLElement} */ (root.querySelector('[data-cart-subtotal]'));
-  const checkout = /** @type {HTMLAnchorElement} */ (root.querySelector('[data-checkout]'));
+  const checkout = /** @type {HTMLFormElement} */ (root.querySelector('[data-checkout]'));
   const msg = /** @type {HTMLElement} */ (root.querySelector('[data-cart-msg]'));
-  if (!live) return;
+  const shipNote = /** @type {HTMLElement} */ (root.querySelector('[data-ship-note]'));
 
-  /** @param {Cart | null} cart */
-  const render = (cart) => {
-    const lines = cart?.lines.edges.map((e) => e.node) ?? [];
-    list.replaceChildren(...lines.map((line) => lineRow(/** @type {Cart} */ (cart), line)));
-    empty.hidden = lines.length > 0;
-    foot.hidden = lines.length === 0;
-    if (cart && lines.length) {
-      subtotal.textContent = money(cart.cost.subtotalAmount);
-      checkout.href = cart.checkoutUrl;
-    }
+  const error = new URLSearchParams(location.search).get('error');
+  if (error) msg.textContent = error;
+  checkout.action = `${cfg.api}/api/checkout`;
+
+  const render = () => {
+    const lines = load();
+    list.replaceChildren(...lines.map(lineRow));
+    totals(lines);
   };
 
-  /** @param {Cart} cart @param {CartLine} line */
-  const lineRow = (cart, line) => {
+  /** Everything below the lines; rows update their own price, so an edited field keeps focus. */
+  const totals = (lines = load()) => {
+    empty.hidden = lines.length > 0;
+    foot.hidden = lines.length === 0;
+    const total = lines.reduce((sum, l) => sum + /** @type {number} */ (items.get(l.key)?.price) * l.qty, 0);
+    subtotal.textContent = money(Math.round(total * 100) / 100);
+    shipNote.hidden = !lines.some((l) => items.get(l.key)?.shipped);
+    /** @type {HTMLInputElement} */ (checkout.elements.namedItem('items')).value = JSON.stringify(lines);
+  };
+
+  /** @param {string} key */
+  const removeLine = (key) => {
+    save(load().filter((l) => l.key !== key));
+    render();
+  };
+
+  /** @param {Line} line */
+  const lineRow = (line) => {
+    const item = /** @type {Item} */ (items.get(line.key));
     const li = document.createElement('li');
     const name = document.createElement('div');
-    const title = document.createElement('b');
-    title.textContent = line.merchandise.product.title;
-    name.append(title);
-    if (line.merchandise.title !== 'Default Title') {
-      const sub = document.createElement('small');
-      sub.textContent = line.merchandise.title;
-      name.append(sub);
-    }
-    const qty = document.createElement('input');
-    Object.assign(qty, { type: 'number', min: '0', max: '99', value: String(line.quantity), inputMode: 'numeric' });
-    qty.setAttribute('aria-label', `Quantity of ${line.merchandise.product.title}`);
+    const title = document.createElement('a');
+    title.href = item.url;
+    const b = document.createElement('b');
+    b.textContent = item.product;
+    title.append(b);
+    const sub = document.createElement('small');
+    sub.textContent = [item.name, item.shipped ? 'Shipped' : 'Download'].filter(Boolean).join(' · ');
+    name.append(title, sub);
     const price = document.createElement('span');
     price.className = 'mono';
-    price.textContent = money(line.cost.totalAmount);
+    price.textContent = money(/** @type {number} */ (item.price) * line.qty);
     const remove = document.createElement('button');
     remove.type = 'button';
     remove.textContent = 'Remove';
-
-    /** @param {number} n */
-    const change = async (n) => {
-      qty.disabled = remove.disabled = true;
-      try { render(await setLineQty(cart.id, line.id, n)); msg.textContent = ''; }
-      catch (err) { msg.textContent = `Couldn't update the cart: ${/** @type {Error} */ (err).message}`; qty.disabled = remove.disabled = false; }
-    };
-    qty.addEventListener('change', () => change(Math.max(0, Math.min(99, Number(qty.value) || 0))));
-    remove.addEventListener('click', () => change(0));
-    li.append(name, qty, price, remove);
+    remove.setAttribute('aria-label', `Remove ${label(item)}`);
+    remove.addEventListener('click', () => removeLine(line.key));
+    if (item.shipped) {
+      const qty = document.createElement('input');
+      Object.assign(qty, { type: 'number', min: '0', max: String(MAX_QTY), value: String(line.qty), inputMode: 'numeric' });
+      qty.setAttribute('aria-label', `Quantity of ${label(item)}`);
+      qty.addEventListener('change', () => {
+        const n = Math.max(0, Math.min(MAX_QTY, Math.floor(Number(qty.value)) || 0));
+        if (n === 0) return removeLine(line.key);
+        qty.value = String(n);
+        const lines = load().map((l) => (l.key === line.key ? { key: l.key, qty: n } : l));
+        save(lines);
+        price.textContent = money(/** @type {number} */ (item.price) * n);
+        totals(lines);
+      });
+      li.append(name, qty, price, remove);
+    } else {
+      li.append(name, document.createElement('span'), price, remove);
+    }
     return li;
   };
 
-  try { render(await loadCart()); }
-  catch (err) { msg.textContent = `Couldn't load the cart: ${/** @type {Error} */ (err).message}`; }
+  checkout.addEventListener('submit', () => {
+    /** @type {HTMLButtonElement} */ (checkout.querySelector('button')).disabled = true;
+    msg.textContent = 'Opening secure checkout…';
+  });
+  // Coming back from Stripe with the browser's back button restores this page from cache.
+  addEventListener('pageshow', () => {
+    /** @type {HTMLButtonElement} */ (checkout.querySelector('button')).disabled = false;
+    if (msg.textContent === 'Opening secure checkout…') msg.textContent = '';
+    render();
+  });
+  render();
 }
 
-showCount(stored()?.qty ?? 0);
-for (const init of [initCatalog, initProduct, initCart]) {
-  init().catch((err) => console.error('shop:', err));
+// ---- Thank-you page: Stripe returns here; empty the cart and go to the order page ----
+
+function initThanks() {
+  const root = /** @type {HTMLElement | null} */ (document.querySelector('[data-thanks]'));
+  if (!root) return;
+  save([]);
+  const id = new URLSearchParams(location.search).get('session_id');
+  if (!id || !cfg.api) return;
+  const url = `${cfg.api}/order?session_id=${encodeURIComponent(id)}`;
+  const link = /** @type {HTMLAnchorElement} */ (root.querySelector('a[data-order]'));
+  link.href = url;
+  link.hidden = false;
+  location.replace(url);
+}
+
+showCount(load());
+for (const init of [initCatalog, initProduct, initCart, initThanks]) {
+  try { init(); } catch (err) { console.error('shop:', err); }
 }

@@ -41,6 +41,18 @@ editions:
   - name: PBR levels of detail
     kind: realtime
     text: "LOD0 103,464, LOD1 44,488 and LOD2 24,584 triangles with 4K, 2K and 1K texture sets. One mesh and material each, in a packed Blender file and as glTF. Passes the Khronos glTF validator. The fan and clutch are only in the detailed edition."
+# Sold separately. Each edition's price falls back to `price` when it has none of its own.
+skus:
+  - key: turbo-diesel-v8-blender
+    name: Blender model
+    price: ""
+    files:
+      - PowerStroke_60_Detailed_v03_candidate_shop_2026-10-20_r1.zip
+  - key: turbo-diesel-v8-lods
+    name: PBR levels of detail
+    price: ""
+    files:
+      - PowerStroke_60_Runtime_v03_candidate_shop_2026-10-20_r1.zip
 downloads:
   - file: PowerStroke_60_Detailed_v03_candidate_shop_2026-10-20_r1.zip
     bytes: 57269562

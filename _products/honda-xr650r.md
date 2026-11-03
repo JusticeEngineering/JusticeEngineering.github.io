@@ -47,6 +47,18 @@ editions:
   - name: Baked GLB
     kind: realtime
     text: "Three self-contained GLBs: LOD0 88,526, LOD1 44,100 and LOD2 17,640 triangles. One material and a 2048-pixel base color, normal and ORM atlas per LOD. All pass the Khronos glTF validator with no errors or warnings and import cleanly into Blender."
+# Sold separately. Each edition's price falls back to `price` when it has none of its own.
+skus:
+  - key: honda-xr650r-blender
+    name: Blender model
+    price: ""
+    files:
+      - XR650R_Detailed_C002_shop_2026-10-20_r1.zip
+  - key: honda-xr650r-glb
+    name: Baked GLB
+    price: ""
+    files:
+      - XR650R_Realtime_C002_shop_2026-10-20_r1.zip
 downloads:
   - file: XR650R_Detailed_C002_shop_2026-10-20_r1.zip
     bytes: 583947

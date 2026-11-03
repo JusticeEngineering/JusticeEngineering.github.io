@@ -47,6 +47,18 @@ editions:
   - name: GLB levels of detail
     kind: realtime
     text: "Three GLBs: LOD0 111,104 (about 1 m), LOD1 55,678 (about 2 m) and LOD2 21,322 triangles (about 4 m). One material and three 2048-pixel PBR maps each, plus a packed Blender file and an offline viewer."
+# Sold separately. Each edition's price falls back to `price` when it has none of its own.
+skus:
+  - key: nissan-td42-blender
+    name: Blender model
+    price: ""
+    files:
+      - TD42_Detailed_shop_2026-10-20_r1.zip
+  - key: nissan-td42-glb
+    name: GLB levels of detail
+    price: ""
+    files:
+      - TD42_Realtime_shop_2026-10-20_r1.zip
 downloads:
   - file: TD42_Detailed_shop_2026-10-20_r1.zip
     bytes: 2102384
