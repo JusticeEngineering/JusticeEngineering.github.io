@@ -18,12 +18,12 @@ export function page(title: string, body: string, status = 200) {
 <meta name="robots" content="noindex">
 <meta name="referrer" content="no-referrer">
 <title>${esc(title)} | Justice Engineering</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,300..700&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="${SITE}/assets/site.css">
 <link rel="stylesheet" href="${SITE}/assets/shop.css">
 </head>
 <body>
-<header class="top"><div class="wrap grid"><a class="mark" href="${SITE}/">Justice Engineering</a></div></header>
+<header class="top"><div class="wrap grid"><a class="mark" href="${SITE}/"><img class="wm" src="${SITE}/images/wordmark.png" alt="Justice Engineering" width="760" height="54"><img class="flag" src="${SITE}/images/flag.svg" alt="" width="247" height="130"></a></div></header>
 <main class="wrap">
 <div class="page-head grid"><div class="eyebrow mono"><a href="${SITE}/shop/">Shop</a></div><div><h1>${esc(title)}</h1></div></div>
 <div class="cart grid"><div class="cart-body order">
