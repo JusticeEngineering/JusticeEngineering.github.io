@@ -42,16 +42,18 @@ Shipping is set once in `lib/config.ts`: flat rate, US only.
 
 ## One-time setup
 
-1. **Stripe.** Create the account and finish identity and bank verification. Under Settings,
-   Customer emails, turn on "Successful payments" so buyers get receipts. Copy the secret key, using
-   the test key first.
+1. **Stripe.** This uses the existing Crew Chief account. Shop charges show on card statements
+   with the suffix `JE SHOP`, and the order page and webhook ignore any checkout without shop
+   items. Under Settings, Customer emails, turn on "Successful payments" so buyers get receipts.
+   Create a **restricted key** (Developers, API keys) with only Checkout Sessions set to Write, so
+   this service can't touch anything else in the account. Make one in test mode first.
 2. **Vercel project.** Choose Add New, then Project, and pick this repository. Set **Root
    Directory** to `shop-api` and the Framework Preset to "Other". The build command and output
    folder come from `vercel.json`.
 3. **Blob store.** In the project, open Storage, choose Create, then Blob, and set Access to
    **Private**. Connect it to all environments.
 4. **Environment variables** (Settings, Environment Variables):
-   - `STRIPE_SECRET_KEY`: use `sk_test_…` in Preview and `sk_live_…` in Production.
+   - `STRIPE_SECRET_KEY`: the restricted key, `rk_test_…` in Preview and `rk_live_…` in Production.
    - `STRIPE_WEBHOOK_SECRET`: from step 6.
    - `RESEND_API_KEY` (optional): emails buyers their order link. Resend's free plan covers
      3,000 emails a month. Verify justice.engineering in Resend first.

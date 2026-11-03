@@ -110,8 +110,10 @@ describe('GET /order', () => {
     expect((await get(SID)).status).toBe(404);
     sessions.retrieve.mockRejectedValueOnce(Object.assign(new Error('No such session'), { type: 'StripeInvalidRequestError' }));
     expect((await get(SID)).status).toBe(404);
+    sessions.retrieve.mockResolvedValueOnce(paid('', { metadata: {} })); // a Crew Chief payment
+    expect((await get(SID)).status).toBe(404);
     expect((await get('../etc')).status).toBe(404);
-    expect(sessions.retrieve).toHaveBeenCalledTimes(2);
+    expect(sessions.retrieve).toHaveBeenCalledTimes(3);
   });
 });
 
@@ -157,6 +159,14 @@ describe('POST /api/webhook', () => {
     expect(body.to).toEqual(['buyer@example.com']);
     expect(body.text).toContain(`https://shop.justice.engineering/order?session_id=${SID}`);
     expect((init.headers as Record<string, string>)['Idempotency-Key']).toBe(`order-${SID}`);
+    fetchMock.mockRestore();
+  });
+  it('ignores other checkouts on the same Stripe account', async () => {
+    process.env.RESEND_API_KEY = 're_x';
+    webhooks.constructEventAsync.mockResolvedValue({ type: 'checkout.session.completed', data: { object: paid('', { metadata: { app: 'crew-chief' } }) } });
+    const fetchMock = vi.spyOn(globalThis, 'fetch');
+    expect((await hook()).status).toBe(200);
+    expect(fetchMock).not.toHaveBeenCalled();
     fetchMock.mockRestore();
   });
   it('sends nothing for an unpaid (pending bank debit) checkout', async () => {

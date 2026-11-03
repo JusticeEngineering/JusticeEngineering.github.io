@@ -30,6 +30,8 @@ export async function POST(request: Request) {
       : `${origin(request)}/order?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${SITE}/shop/cart/`,
     allow_promotion_codes: true,
+    // The account is shared with Crew Chief; this marks shop charges on card statements.
+    payment_intent_data: { statement_descriptor_suffix: 'JE SHOP' },
     automatic_tax: { enabled: process.env.STRIPE_AUTOMATIC_TAX === 'true' },
     ...(shipped && {
       shipping_address_collection: { allowed_countries: ['US'] },

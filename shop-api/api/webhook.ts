@@ -16,8 +16,9 @@ export async function POST(request: Request) {
   // Card payments complete at once; bank debits succeed later, in a second event.
   if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
     const session = event.data.object;
-    if (isPaid(session)) {
-      const lines = decodeItems(session.metadata?.items);
+    const lines = decodeItems(session.metadata?.items);
+    // Skip checkouts that aren't shop orders: the Stripe account is shared with Crew Chief.
+    if (isPaid(session) && lines.length) {
       try {
         await sendOrderEmail(session, lines, `${origin(request)}/order?session_id=${encodeURIComponent(session.id)}`);
       } catch (err) {

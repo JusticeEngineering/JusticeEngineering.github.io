@@ -15,5 +15,8 @@ export async function paidOrder(id: string | null): Promise<Paid | null> {
     throw err;
   }
   if (!isPaid(session)) return null;
-  return { session, lines: decodeItems(session.metadata?.items) };
+  const lines = decodeItems(session.metadata?.items);
+  // The Stripe account also takes other payments (Crew Chief); those aren't shop orders.
+  if (!lines.length) return null;
+  return { session, lines };
 }
