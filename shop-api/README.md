@@ -60,8 +60,11 @@ Shipping is set once in `lib/config.ts`: flat rate, US only.
    - `STRIPE_WEBHOOK_SECRET`: from step 6.
    - `RESEND_API_KEY` (optional): emails buyers their order link. Resend's free plan covers
      3,000 emails a month. Verify justice.engineering in Resend first.
-   - `STRIPE_AUTOMATIC_TAX=true` (optional): turns on Stripe Tax, which costs 0.5% per sale where
-     you're registered.
+   - `STRIPE_AUTOMATIC_TAX=true`: turns on Stripe Tax. Add your New York registration in Stripe
+     (Tax, Registrations) first. It costs 0.5% only on orders where you're registered. Shipped items
+     use the general tangible-goods code and downloads Stripe's general digital code. A product can
+     set `tax_code:` in its front matter, for example if your accountant decides the packages that
+     include Python scripts count as downloadable software (`txcd_10202000`).
    - `SHOP_INCLUDE_UNPUBLISHED=1` and `SHOP_TEST_PRICE=1` (Preview only): make unpublished,
      unpriced products buyable for $1 on preview deployments, for sandbox purchases. Production
      ignores `SHOP_TEST_PRICE`.

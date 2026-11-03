@@ -44,7 +44,8 @@ for (const name of readdirSync(productsDir).filter((f) => f.endsWith('.md')).sor
       return d;
     });
     if (!shipped && !files.length) throw new Error(`${name} ${s.key}: a digital item needs at least one file`);
-    items.push({ key: s.key, product: p.title, name: s.name ?? '', url: `/shop/${slug}/`, unitAmount, shipped, files });
+    const taxCode = s.tax_code ?? p.tax_code;
+    items.push({ key: s.key, product: p.title, name: s.name ?? '', url: `/shop/${slug}/`, unitAmount, shipped, ...(taxCode && { taxCode }), files });
   }
 }
 const keys = items.map((i) => i.key);

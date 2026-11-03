@@ -75,6 +75,17 @@ describe('POST /api/checkout', () => {
     expect(params.shipping_options[0].shipping_rate_data.fixed_amount.amount).toBe(500);
     expect(params.success_url).toBe('https://justice.engineering/shop/thanks/?session_id={CHECKOUT_SESSION_ID}');
   });
+  it('tags items for Stripe Tax and prices tax on top when tax is on', async () => {
+    process.env.STRIPE_AUTOMATIC_TAX = 'true';
+    sessions.create.mockResolvedValue({ url: 'https://checkout.stripe.com/x' });
+    await checkout.POST(post([{ key: 'pencil', qty: 1 }, { key: 'model-a', qty: 1 }]));
+    delete process.env.STRIPE_AUTOMATIC_TAX;
+    const params = sessions.create.mock.calls[0][0];
+    expect(params.automatic_tax).toEqual({ enabled: true });
+    expect(params.line_items.map((l: any) => [l.price_data.product_data.tax_code, l.price_data.tax_behavior]))
+      .toEqual([['txcd_99999999', 'exclusive'], ['txcd_10000000', 'exclusive']]);
+    expect(params.shipping_options[0].shipping_rate_data.tax_behavior).toBe('exclusive');
+  });
   it('sends the buyer back to the cart with a reason when nothing is for sale', async () => {
     const res = await checkout.POST(post([{ key: 'nope', qty: 1 }]));
     expect(res.status).toBe(303);

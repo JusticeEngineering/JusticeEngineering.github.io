@@ -1,4 +1,4 @@
-import { catalog, label, type Item } from './catalog.js';
+import { catalog, label, taxCode, type Item } from './catalog.js';
 import { MAX_LINES, MAX_QTY } from './config.js';
 
 export type Line = { item: Item; qty: number };
@@ -26,14 +26,18 @@ export function parseCart(raw: unknown): Line[] {
   return [...lines.values()];
 }
 
-/** Stripe Checkout line items, priced from the catalog, never from the request. */
-export const lineItems = (lines: Line[]) =>
+/**
+ * Stripe Checkout line items, priced from the catalog, never from the request.
+ * With Stripe Tax on, each carries its tax code and tax is added on top of the price.
+ */
+export const lineItems = (lines: Line[], tax = false) =>
   lines.map(({ item, qty }) => ({
     quantity: qty,
     price_data: {
       currency: 'usd',
       unit_amount: item.unitAmount,
-      product_data: { name: label(item), metadata: { key: item.key } },
+      product_data: { name: label(item), metadata: { key: item.key }, ...(tax && { tax_code: taxCode(item) }) },
+      ...(tax && { tax_behavior: 'exclusive' as const }),
     },
   }));
 

@@ -19,10 +19,11 @@ export async function POST(request: Request) {
   const items = encodeItems(lines);
   if (items.length > 500) return back('That cart is too large for one order. Please split it.');
   const shipped = lines.some((l) => l.item.shipped);
+  const tax = process.env.STRIPE_AUTOMATIC_TAX === 'true';
 
   const params: Stripe.Checkout.SessionCreateParams = {
     mode: 'payment',
-    line_items: lineItems(lines),
+    line_items: lineItems(lines, tax),
     metadata: { items },
     // Production returns through the site so it can empty the cart; previews come straight back.
     success_url: process.env.VERCEL_ENV === 'production'
@@ -32,7 +33,7 @@ export async function POST(request: Request) {
     allow_promotion_codes: true,
     // The account is shared with Crew Chief; this marks shop charges on card statements.
     payment_intent_data: { statement_descriptor_suffix: 'JE SHOP' },
-    automatic_tax: { enabled: process.env.STRIPE_AUTOMATIC_TAX === 'true' },
+    automatic_tax: { enabled: tax },
     ...(shipped && {
       shipping_address_collection: { allowed_countries: ['US'] },
       shipping_options: [{
@@ -40,6 +41,7 @@ export async function POST(request: Request) {
           type: 'fixed_amount',
           display_name: SHIPPING.name,
           fixed_amount: { amount: SHIPPING.amount, currency: 'usd' },
+          ...(tax && { tax_behavior: 'exclusive' as const }),
           delivery_estimate: {
             minimum: { unit: 'business_day', value: SHIPPING.minDays },
             maximum: { unit: 'business_day', value: SHIPPING.maxDays },
