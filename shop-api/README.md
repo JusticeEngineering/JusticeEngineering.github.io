@@ -42,9 +42,12 @@ Shipping is set once in `lib/config.ts`: flat rate, US only.
 
 ## One-time setup
 
-1. **Stripe.** This uses the existing Crew Chief account. Shop charges show on card statements
-   with the suffix `JE SHOP`, and the order page and webhook ignore any checkout without shop
-   items. Under Settings, Customer emails, turn on "Successful payments" so buyers get receipts.
+1. **Stripe.** Use a separate "Justice Engineering" account under the same login. Account
+   switcher, Create: the Checkout page and card statements show the account's business name.
+   The code also works on a shared account: shop charges carry the statement suffix `JE SHOP`,
+   and the order page and webhook ignore checkouts without shop items. Under Settings, Customer
+   emails, turn on "Successful payments" so buyers get receipts. No Stripe products are needed;
+   prices come from `_products/`.
    Create a **restricted key** (Developers, API keys) with only Checkout Sessions set to Write, so
    this service can't touch anything else in the account. Make one in test mode first.
 2. **Vercel project.** Choose Add New, then Project, and pick this repository. Set **Root
