@@ -10,8 +10,7 @@
         </ul>
       </div>
       <a href="/services/">Services</a>
-      {% if site.products.size > 0 %}<a href="/shop/">Shop</a>
-      <a href="/shop/cart/" id="cart-link" hidden>Cart (<span>0</span>)</a>{% endif %}
+      {% if site.shop_url != "" %}<a href="{{ site.shop_url }}">Shop</a>{% endif %}
       {% if site.posts.size > 0 %}<a href="/blog/">Blog</a>{% endif %}
       <a href="/about/">About</a>
     </nav>
