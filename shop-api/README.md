@@ -62,7 +62,9 @@ Shipping is set once in `lib/config.ts`: flat rate, US only.
      3,000 emails a month. Verify justice.engineering in Resend first.
    - `STRIPE_AUTOMATIC_TAX=true` (optional): turns on Stripe Tax, which costs 0.5% per sale where
      you're registered.
-   - `SHOP_INCLUDE_UNPUBLISHED=1` (Preview only): lets you test unpublished products.
+   - `SHOP_INCLUDE_UNPUBLISHED=1` and `SHOP_TEST_PRICE=1` (Preview only): make unpublished,
+     unpriced products buyable for $1 on preview deployments, for sandbox purchases. Production
+     ignores `SHOP_TEST_PRICE`.
 5. **Domain.** Under Settings, Domains, add `shop.justice.engineering`. Then add the CNAME record
    Vercel shows at your DNS host.
 6. **Webhook.** In Stripe, open Developers, then Webhooks, and add the endpoint

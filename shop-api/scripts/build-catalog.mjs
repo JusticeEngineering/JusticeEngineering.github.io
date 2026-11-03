@@ -11,6 +11,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 const productsDir = join(here, '..', '..', '_products');
 const out = join(here, '..', 'lib', 'catalog.generated.ts');
 const includeUnpublished = process.argv.includes('--unpublished') || process.env.SHOP_INCLUDE_UNPUBLISHED === '1';
+// SHOP_TEST_PRICE=1 prices every unpriced item at $1 on a preview deployment, for sandbox purchases.
+const testPrice = process.env.VERCEL_ENV !== 'production' && process.env.SHOP_TEST_PRICE ? process.env.SHOP_TEST_PRICE : undefined;
 
 /** @param {unknown} v @param {string} where */
 function cents(v, where) {
@@ -34,7 +36,7 @@ for (const name of readdirSync(productsDir).filter((f) => f.endsWith('.md')).sor
   // No `skus` list: the product is one item, keyed by its handle, with every download.
   const skus = p.skus ?? [{ key: p.handle, name: '', files: [...downloads.keys()] }];
   for (const s of skus) {
-    const unitAmount = cents(s.price ?? p.price, `${name} ${s.key}`);
+    const unitAmount = cents(s.price || p.price || testPrice, `${name} ${s.key}`);
     if (unitAmount === null) continue; // no price: not for sale yet
     const files = (s.files ?? []).map((f) => {
       const d = downloads.get(f);
@@ -54,4 +56,4 @@ import type { Item } from './catalog.js';
 
 export const items: Item[] = ${JSON.stringify(items, null, 2)};
 `);
-console.log(`catalog: ${items.length} item(s) for sale${includeUnpublished ? ' (including unpublished)' : ''}`);
+console.log(`catalog: ${items.length} item(s) for sale${includeUnpublished ? ' (including unpublished)' : ''}${testPrice ? ` (unpriced items at $${testPrice} for testing)` : ''}`);
