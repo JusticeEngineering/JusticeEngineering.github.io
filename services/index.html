@@ -1,24 +1,53 @@
 ---
 layout: default
 title: Services
-description: Product engineering, consulting, hardware interfaces, Exposure audits, CAD and fabrication, and building and design from Justice Engineering in New York.
+description: Product engineering, hardware interfaces, Exposure audits, CAD and fabrication, and building and design from Justice Engineering in New York.
+services:
+  - id: product-engineering
+    name: Product engineering
+    text: Apps, tools and prototypes built end to end, full stack, in any language. Consulting and technical leadership for teams.
+    img: product-engineering.jpg
+    alt: Drafting Table on the Mac App Store
+  - id: hardware-interfaces
+    name: Hardware interfaces
+    text: Vehicle diagnostics over OBD2 and CAN, serial and Bluetooth LE. Getting machines and sensors talking to software.
+    img: hardware-interfaces.jpg
+    alt: Line drawing of the J1962 OBD2 connector
+  - id: exposure-audit
+    name: Exposure audits
+    text: What an AI-assisted reverse engineer can pull out of the apps you ship.
+    img: exposure-audits.jpg
+    alt: A wall of monitors showing code
+  - id: cad-fabrication
+    name: CAD and fabrication
+    text: 3D models into drawings, plan sheets and jigs.
+    img: cad-fabrication.jpg
+    alt: Line drawing of a Toyota 1HZ diesel engine
+  - id: building-design
+    name: Building and design
+    text: Furniture, fixtures, fabrication, renovation design and one-off builds, drawn in CAD and built by hand.
+    img: building-design.jpg
+    alt: Workbench plan sheet in Drafting Table
 ---
       {% if site.booking_url != "" %}{% assign book = site.booking_url %}{% else %}{% assign book = "mailto:" | append: site.email | append: "?subject=Meeting%20request" %}{% endif %}
       <div class="svc grid">
         <div class="svc-body">
           <h1>Services</h1>
-          <ul class="svc-list">
-            <li>Product engineering, full stack, any language</li>
-            <li>Consulting</li>
-            <li>Hardware interfaces</li>
-            <li id="exposure-audit">Exposure audits: what an AI-assisted reverse engineer can pull out of the apps you ship</li>
-            <li>CAD and fabrication: 3D models into drawings, plan sheets and jigs</li>
-            <li>Building and design: furniture, fixtures, fabrication, renovation design and one-off builds, drawn in CAD and built by hand</li>
+          <ul class="svc-grid">
+            {% for s in page.services %}
+            <li class="svc-card" id="{{ s.id }}">
+              <div class="svc-media">
+                <img src="/images/services/{{ s.img }}" alt="{{ s.alt }}" width="1200" height="900" loading="lazy">
+                <div class="svc-actions">
+                  <a class="btn primary" href="mailto:{{ site.email }}?subject={{ s.name | uri_escape }}">Email</a>
+                  <a class="btn" href="{{ book }}">Schedule a meeting</a>
+                </div>
+              </div>
+              <h2>{{ s.name }}</h2>
+              <p>{{ s.text }}</p>
+            </li>
+            {% endfor %}
           </ul>
-          <div class="ctas">
-            <a class="btn primary" href="mailto:{{ site.email }}">Email</a>
-            <a class="btn" href="{{ book }}">Schedule a meeting</a>
-          </div>
           <p class="clients">Clients: Mozilla Firefox, Protocol Labs, Richard Prince Studios, Trigram.</p>
         </div>
       </div>
