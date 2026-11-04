@@ -3,6 +3,9 @@ url: https://justice.engineering
 email: work@justice.engineering
 # Booking link for "Schedule a meeting" on the Services page. Leave empty to fall back to email.
 booking_url: "https://cal.com/justiceengineering/intro"
+# The shop (its own site, repo JusticeEngineering/shop). The header shows a Shop link only when
+# this is set.
+shop_url: "https://shop.justice.engineering"
 about_photo: "/images/about.jpg"
 markdown: kramdown
 exclude:
