@@ -7,3 +7,4 @@ about_photo: "/images/about.jpg"
 markdown: kramdown
 exclude:
   - README.md
+  - GRID.md
