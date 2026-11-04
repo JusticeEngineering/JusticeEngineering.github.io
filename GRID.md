@@ -8,7 +8,7 @@ to the other.
 The model is the International Typographic Style as Josef Müller-Brockmann set it out in
 *Grid Systems in Graphic Design* (1981): a fixed type area, columns separated by constant
 gutters, a baseline unit that every vertical measure is built from, a short list of type sizes,
-and asymmetric composition with a label column. The tone is a technical catalog (McMaster-Carr),
+and flush-left asymmetric composition. The tone is a technical catalog (McMaster-Carr),
 not a blueprint: no title blocks, no ruler ticks, no drawing-sheet borders.
 
 ## Format
@@ -59,18 +59,19 @@ Rules for setting:
 
 ## Composition
 
-- **Masthead** on every inner page: label on columns 1 to 3, title on columns 4 to 12, closed by
-  a 4px black rule. The label drops 8px (4px below desktop) so its capitals hang from the
-  title's cap height. A masthead with facts (the shop) puts the title on 4 to 8 and the facts
-  table on 10 to 12.
-- **Sections**: 1px black rule, label on columns 1 to 3, content on columns 4 to 12. Inside the
-  content column, an intro and key table split 5 + 4 of its 9 columns.
+- **Flush left.** Everything hangs from column 1. There is no separate label column: a label sits
+  directly above what it names.
+- **Masthead** on every inner page: label, then title (columns 1 to 10), closed by a 4px black
+  rule. A masthead with facts (the shop) puts the title on 1 to 8 and the facts table on 10 to 12.
+- **Sections**: 1px black rule, label, then content. An intro and key table sit on 1 to 6 and
+  8 to 12, with column 7 left open.
 - **Drawings** (home, Crew Chief, Drafting Table): stage on columns 1 to 8, inspector on 9 to 12.
 - **Cards**: services are 3 across at 4 columns each (2 across on tablet, 1 on phone); the shop
   catalog is 2 across at 6 columns.
 - **Product page**: pictures on columns 1 to 6, column 7 left open, information on 8 to 12.
-- **About**: text on columns 4 to 8, photograph on 9 to 12.
-- Below 900 the label column becomes a heading row and two-column compositions stack.
+- **About**: text on columns 1 to 6, photograph on 9 to 12.
+- **Cart and order**: columns 1 to 8.
+- Below 900, two-column compositions stack.
 
 ## Rules and colour
 
