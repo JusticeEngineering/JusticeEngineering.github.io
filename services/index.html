@@ -30,11 +30,20 @@ services:
     alt: Workbench plan sheet in Drafting Table
 ---
       {% if site.booking_url != "" %}{% assign book = site.booking_url %}{% else %}{% assign book = "mailto:" | append: site.email | append: "?subject=Meeting%20request" %}{% endif %}
-      <div class="page-head grid">
+      <div class="page-head has-facts grid">
         <div class="eyebrow">Practice</div>
         <div>
           <h1>Services</h1>
         </div>
+        <aside class="facts clients" aria-label="Clients">
+          <div class="label">Clients</div>
+          <ul>
+            <li>Mozilla Firefox</li>
+            <li>Protocol Labs</li>
+            <li>Richard Prince Studios</li>
+            <li>Trigram</li>
+          </ul>
+        </aside>
       </div>
       <div class="svc grid">
         <div class="svc-body">
@@ -55,11 +64,3 @@ services:
           </ul>
         </div>
       </div>
-      <section class="s clients">
-        <div class="grid">
-          <div class="label">Clients</div>
-          <div class="body">
-            <p>Mozilla Firefox, Protocol Labs, Richard Prince Studios, Trigram.</p>
-          </div>
-        </div>
-      </section>
