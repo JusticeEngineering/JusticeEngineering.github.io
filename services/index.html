@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Services
-description: Product engineering, consulting, hardware interfaces and Exposure audits from Justice Engineering in New York.
+description: Product engineering, consulting, hardware interfaces, Exposure audits, CAD and fabrication, and building and design from Justice Engineering in New York.
 ---
       {% if site.booking_url != "" %}{% assign book = site.booking_url %}{% else %}{% assign book = "mailto:" | append: site.email | append: "?subject=Meeting%20request" %}{% endif %}
       <div class="svc grid">
@@ -12,6 +12,8 @@ description: Product engineering, consulting, hardware interfaces and Exposure a
             <li>Consulting</li>
             <li>Hardware interfaces</li>
             <li id="exposure-audit">Exposure audits: what an AI-assisted reverse engineer can pull out of the apps you ship</li>
+            <li>CAD and fabrication: 3D models into drawings, plan sheets and jigs</li>
+            <li>Building and design: furniture, fixtures, fabrication, renovation design and one-off builds, drawn in CAD and built by hand</li>
           </ul>
           <div class="ctas">
             <a class="btn primary" href="mailto:{{ site.email }}">Email</a>
