@@ -1,0 +1,59 @@
+---
+layout: default
+title: Crew Chief
+description: Crew Chief reads fault codes and live data from your vehicle's OBD2 port over Bluetooth LE and keeps a record of the work. For iPhone.
+drawings: true
+---
+      <div class="page-head grid">
+        <div class="eyebrow mono">Product · iPhone</div>
+        <div>
+          <h1>Crew Chief</h1>
+          <p>Diagnostics and maintenance for the vehicles you own. Crew Chief reads fault codes and live data from the OBD2 port over Bluetooth LE and keeps a record of the work.</p>
+          <div class="ctas">
+            <a class="btn primary" href="https://apps.apple.com/us/app/crewchief-auto/id6760673109">Download on the App Store ↗</a>
+            <a class="btn" href="https://crewchief.cc">crewchief.cc ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <section class="s">
+        <div class="grid">
+          <div class="label mono">The port</div>
+          <div class="body">
+            <div class="phero">
+              <div>
+                <p>Every car and light truck sold in the US since 1996 has a J1962 connector under the dash. Crew Chief talks to it through a Bluetooth LE adapter, requests standard OBD2 data and decodes the replies.</p>
+              </div>
+              <dl class="spec mono">
+                <div><dt>Status</dt><dd>On the App Store</dd></div>
+                <div><dt>Platform</dt><dd>iPhone</dd></div>
+                <div><dt>Interface</dt><dd>OBD2 · CAN · Bluetooth LE</dd></div>
+                <div><dt>Web</dt><dd><a href="https://crewchief.cc">crewchief.cc</a></dd></div>
+              </dl>
+            </div>
+          </div>
+          <div class="pfig" id="cc-fig">
+            <div class="stage">
+              <div class="bar mono">
+                <div class="seg" role="group" aria-label="View">
+                  <button type="button" data-view="face" aria-pressed="false">Pin face</button>
+                  <button type="button" data-view="iso" aria-pressed="true">Isometric</button>
+                </div>
+                <span>Drag to orbit · hover a pin</span>
+              </div>
+              <div class="cv">
+                <canvas aria-label="Line drawing of the J1962 OBD2 connector with its 16 pins"></canvas>
+                <div class="ov"></div>
+                <p class="nogl mono" hidden>This drawing needs WebGL.</p>
+              </div>
+            </div>
+            <div class="panel mono">
+              <div class="phead"><span>J1962 connector</span><span>Vehicle side</span></div>
+              <p class="pstatus" id="cc-status">Select a pin to see its function.</p>
+              <ul class="pins" id="cc-pins"></ul>
+              <div class="phead"><span>Bus traffic</span><span>Sample · CAN 500 kbit/s</span></div>
+              <ol class="log" id="cc-log" aria-live="off"></ol>
+            </div>
+          </div>
+        </div>
+      </section>

@@ -1,0 +1,15 @@
+---
+layout: default
+title: About
+description: David Justice, head of Justice Engineering. Software engineer, car mechanic and sculptor in New York.
+---
+      <div class="about grid">
+        <div class="about-text">
+          <h1>David Justice, head of Justice Engineering.</h1>
+          <p>With over 15 years of experience, my earned expertise in complex software allows me to implement rapid new developments in engineering intentionally and meticulously. In addition, I’m a car mechanic and a sculptor. My relationships to and within the automotive and art worlds inform my studio’s singular, idiosyncratic offerings. I excel at both atypical and typical (software) engineering projects. Try me.</p>
+          <p class="contact"><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+        </div>
+        <figure class="about-photo">
+          {% if site.about_photo != "" %}<img src="{{ site.about_photo }}" alt="David Justice">{% else %}<div class="ph mono">Photo to come</div>{% endif %}
+        </figure>
+      </div>
